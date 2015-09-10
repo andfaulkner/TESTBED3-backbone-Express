@@ -17,6 +17,7 @@
     "express": "^4.13.3",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
+    "node-babel": "^0.1.2",
     "string": "^3.3.1",
     "trace": "^1.2.0",
     "winston": "^1.0.1",

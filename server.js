@@ -1,7 +1,18 @@
+/**
+ * LAUNCH EXPRESSJS SERVER FROM HERE.
+ */
 var http = require('http');
 http.globalAgent.maxSockets = Infinity;
 
-if (process.env.NODE_ENV !== 'production'){
+//ECMA 6 POLYFILL
+require('harmonize')(); // ensure es6 works
+require('babel/register');
+Object.getPrototypeOf.toString = function() {
+    return Object.toString();
+};
+
+
+if (process.env.NODE_ENV !== 'production') {
     Error.stackTraceLimit = Infinity;
     require('trace'); // active long stack trace
     require('clarify'); // Exclude node internal calls from the stack
@@ -23,6 +34,6 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 //**********************************************************************//
 
 //Build Express app itself (loads & runs a constructor module), serves over web
-app.listen(config.server.port, (function(){
-        return log.info('example app listening! Bootup done!'); // server
-}));
+app.listen(config.server.port, function() {
+    return log.info('example app listening! Bootup done!'); // server
+});

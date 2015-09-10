@@ -1,0 +1,54 @@
+JavaScript Errors Notifier
+https://chrome.google.com/webstore/detail/javascript-errors-notifie/jafmfknfnkoekkdocjiaipcnmkklaajd/related?hl=en
+
+JSON Viewer
+https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh/related?hl=en
+
+jQuery Audit
+https://chrome.google.com/webstore/detail/jquery-audit/dhhnpbajdcgdmbbcoakfhmfgmemlncjg/related?hl=en
+
+JS Runtime Inspector
+https://chrome.google.com/webstore/detail/js-runtime-inspector/iilpjebedgohcmlffhnkhbjhabkdhfmn/related?hl=en
+
+Eye Dropper
+https://chrome.google.com/webstore/detail/eye-dropper/hmdcmlfkchdmnmnmheododdhjedfccka?hl=en
+
+Library Detector
+
+Visual Event plugin
+https://chrome.google.com/webstore/detail/visual-event/pbmmieigblcbldgdokdjpioljjninaim/related?hl=en
+
+DOMListener
+https://chrome.google.com/webstore/detail/domlistener/jlfdgnlpibogjanomigieemaembjeolj/related?hl=en
+
+HTTP Spy
+https://chrome.google.com/webstore/detail/http-spy/agnoocojkneiphkobpcfoaenhpjnmifb/related?hl=en
+
+Live HTTP Headers
+https://chrome.google.com/webstore/detail/live-http-headers/iaiioopjkcekapmldfgbebdclcnpgnlo/related?hl=en
+
+HTTP Trace
+https://chrome.google.com/webstore/detail/http-trace/idladlllljmbcnfninpljlkaoklggknp?hl=en
+--- Tracks all HTTP requests made from the current tab
+
+Tracks all HTTP requests made from the current
+https://chrome.google.com/webstore/detail/ip-address-and-domain-inf/lhgkegeccnckoiliokondpaaalbhafoa/related?hl=en
+--- See detailed info about every IP Address, Domain Name & Provider
+--- displays detailed information about the current website
+
+
+Recent Bookmarks
+https://chrome.google.com/webstore/detail/recent-bookmarks/olndffocioplakeilhkgenfgdincjlpn/related?hl=en
+--- A list of recent bookmarks in descending order, grouped by the day they were added.
+
+Page Refresh
+https://chrome.google.com/webstore/detail/page-refresh/hmooaemjmediafeacjplpbpenjnpcneg?hl=en
+--- Auto-refresh (reload) pages, if they are idle, on selected interval
+--- To use it, you have to press CTRL+SHIFT+R (or CMD+SHIFT+R on Mac)
+
+AJAX Debugger
+https://chrome.google.com/webstore/detail/ajax-debugger/lgfefckpdealogpcfjdhinecfbcgedam/related?hl=en
+--- Logs all AJAX activity to the Dev Tools Console, allowing inspection of AJAX calls, and open calls in new tab with all the inputs
+--- shows top-level request info e.g. HTTP status, size, response time
+--- AJAX call info can be opened in a new tab, including all inputs
+--- Drills down to all low-level request details e.g. HTTP header info

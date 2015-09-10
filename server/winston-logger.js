@@ -6,7 +6,7 @@ var path = require('path');
 var winston = require('winston');
 var lodash = require('lodash');
 require('colors');
-var string = require('string');
+require('string');
 
 var config = require('../config/default').winstonLogs;
 
@@ -41,7 +41,7 @@ logFileNames.forEach(function(logFileName) {
 
 //*************************** BASIC LOGGERS ***************************//
 //Builds transports into specific files
-var fileTransportFactory = (function(logLvl, nm, logFilePath, loggerTypeLabel) {
+var fileTransportFactory = function(logLvl, nm, logFilePath, loggerTypeLabel) {
     return new (winston.transports.File)({
         label: loggerTypeLabel,
         name: nm,
@@ -53,7 +53,7 @@ var fileTransportFactory = (function(logLvl, nm, logFilePath, loggerTypeLabel) {
         maxFiles: 5,
         colorize: false
     });
-});
+};
 
 //Creates logging object
 var logger = function(loggerTypeLabel, consoleLogLevel){

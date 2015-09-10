@@ -146,6 +146,8 @@
         }
     });
 
+
+
     console.log('todo:'); console.log(todo);
 
     var view = new app.TodoView({
@@ -162,9 +164,8 @@
 
     //----- GENERIC EVENT ATTACHED TO VIEW -----//
     // attach event to view
-    view.on('event1', function(){
-        console.log('event1 occurred!');
-    });
+    view.on('event1', () =>
+        (console.log('event1 occurred!')));
 
     //trigger event
     view.trigger('event1');
@@ -237,6 +238,7 @@
         }
     });
 
+
     var appView = new AppView();
 
     //------------------------- END BACKBONE MAIN VIEW -----------------------------//
@@ -250,4 +252,37 @@
 //Model      class:            appClass.TodoModel
 //        instance:            todoModel
 //        instance:            todoModel2
-//View class:                  appClass.TodoView
+//View class:                  papClass.TodoView
+//
+//
+
+
+/* DIAGRAM
+
+                            Communication is via Events:
+                                'add' event on todoList triggers appView.addOne
+                                'reset' event on todoList triggers appView.addAll
+
+
+              --------                     -------
+              |addAll|<------triggers------|reset|
+  FUNCTIONS:::|------|                     |-----|:::EVENTS <<--all bound 2 app.todoList by app.appView
+              |addOne|<------triggers------| add |
+     =========--------===                ===-----==================
+     |VIEW: app.AppView|                 |COLLECTION: app.TodoList|
+     |                 |-----------------|                        |
+     |[i: app.appView ]| 1             0 | [ inst:  app.todoList ]|
+     ===================                 ==========================
+          |1                                |1
+          |                                 |
+          |                                 |
+          |                                 |
+          |0...n                            |0...n
+     ================                  =================
+     |              |                  |               |
+     |VIEW: TodoView|------------------|MODEL: app.Todo|
+     |              |1            0...n|               |
+     ===============                   =================
+
+
+*/
