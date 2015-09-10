@@ -1,4 +1,4 @@
-(function(Backbone, _, $, Store, window) {
+(function page3_js(Backbone, _, $, Store, window) {
     var app = {}; // create namespace for our app
 
     var passes = 0;
@@ -23,10 +23,15 @@
         Backbone.syncOld.apply(this, arguments);
     };
 
+
+
+
     //------------------------------------------
     // Models
     //------------------------------------------
     //
+    //-----------------------------------------------------------------------//
+    //******************* INDIVIDUAL TODO LIST ITEM MODEL *******************//
     app.Todo = Backbone.Model.extend({
         defaults: {
             title: '',
@@ -40,24 +45,67 @@
             });
         }
     });
+    //***************** END INDIVIDUAL TODO LIST ITEM MODEL *****************//
+    //-----------------------------------------------------------------------//
+
+
+
 
     //------------------------------------------
     // Collections
     //------------------------------------------
     //
+    //-----------------------------------------------------------------------//
+    //***************** COLLECTION OF TODO LIST ITEM MODELS *****************//
+    /**
+     * A collection of all individual todo list items (Models), which
+     * together comprise the entirety of the todo list's data.
+     */
     app.TodoList = Backbone.Collection.extend({
+
+        /**
+         * Sets this Collection to consist of Todo list items ('app.Todo' Models)
+         * @type {Model}
+         */
         model: app.Todo,
-        localStorage: new Store('backbone-todo')
+
+        localStorage: new Store('backbone-todo'),
+
+        /**
+         * Determine which todo list items are "completed" and return them
+         * @return {Array} all individual todo list items (Models) marked "completed"
+         */
+        completed: function(){
+            return this.filter(function(todo){
+                return todo.get('completed');
+            });
+        },
+
+        /**
+         * Determine which todo list items are not "completed" and return them
+         * @return {Array} all individual todo list items (Models) NOT marked "completed"
+         */
+        remaining: function(){
+            return this.without.apply(this, this.completed() );
+        }
     });
 
-    // instance of the Collection
+
+    // Instance of the Collection
     app.todoList = new app.TodoList();
+
+    //*************** END COLLECTION OF TODO LIST ITEM MODELS ***************//
+    //-----------------------------------------------------------------------//
+
+
 
 
     //------------------------------------------
     // Views
     //------------------------------------------
     //
+    //-----------------------------------------------------------------------//
+    //********************** INDIVIDUAL TODO LIST ITEM **********************//
     /**
      * Individual todo list items (<li> items)
      */
@@ -67,15 +115,15 @@
 
         template: _.template($('#item-template').html()),
 
-        initialize: function TodoView_initialize() {
-            this.model.on('change', this.render, this);
-            this.model.on('destroy', this.remove, this); //remove: convenience BB fn to rm view from DOM
-        },
-
         render: function TodoView_render() {
             this.$el.html(this.template(this.model.toJSON()));
             this.input = this.$('.edit'); //def this.input as <input class="edit" value=/*curVal*/>
             return this; // enable chained calls
+        },
+
+        initialize: function TodoView_initialize() {
+            this.model.on('change', this.render, this);
+            this.model.on('destroy', this.remove, this); //remove: convenience BB fn to rm view from DOM
         },
 
         /**
@@ -83,11 +131,11 @@
          * @type {Object<String:String>}
          */
         events: {
-            'click .destroy': 'destroy',
             'dblclick label': 'edit',
-            'blur .edit': 'close',
             'keypress .edit': 'updateOnEnter',
-            'click .toggle': 'toggleTodoItem'
+            'blur .edit': 'close',
+            'click .toggle': 'toggleCompleted',
+            'click .destroy': 'destroy'
         },
 
         /**
@@ -96,13 +144,6 @@
         edit: function TodoView_edit() {
             this.$el.addClass('editing'); //restyle element to inform user it's currently being edited
             this.input.focus(); //"select" the input box
-        },
-
-        /**
-         * Destroys the model associated with this View
-         */
-        destroy: function TodoView_destroy() {
-            this.model.destroy();
         },
 
         /**
@@ -133,29 +174,43 @@
          * Mark a completed todo list item complete.
          * Save the completion status of the list item to storage.
          */
-        toggleTodoItem: function TodoView_toggleTodoItem() {
+        toggleCompleted: function TodoView_toggleCompleted() {
             console.log(this.$el); //--> entire DOM of single todo list item (<li><div class="view">...etc...</div></li>)
 
             //Determine what to save
-            var isDone = this.$el.find('.toggle')[0].checked;
-            /**/ console.log(isDone); console.log(this.model);
+            // var isDone = this.$el.find('.toggle')[0].checked;
+
+            // console.log(isDone); console.log(this.model);
+            this.model.toggle();
+
+            // this.model.toggle({ completed: !this.model.get('completed') });
 
             //Save new val in db (true if checkbox checked, false if not). CB runs based on if save worked.
-            this.model.save({ completed: isDone }, {
-                success: function View_toggleTodoItemSuccess(model, response, options){
-                    console.log('to-do item successfully saved!');
-                },
-                error: function View_toggleTodoItemError(model, response, options){
-                    console.log('to-do item failed to save');
-                },
-            });
+            // this.model.save({ completed: isDone }, {
+            //     success: function View_toggleCompletedSuccess(model, response, options){
+            //         console.log('to-do item successfully saved!');
+            //     },
+            //     error: function View_toggleCompletedError(model, response, options){
+            //         console.log('to-do item failed to save');
+            //     },
+            // });
+        },
+
+        /**
+         * Destroys the model associated with this View
+         */
+        destroy: function TodoView_destroy() {
+            this.model.destroy();
         }
 
     });
+    //******************** END INDIVIDUAL TODO LIST ITEM ********************//
+    //-----------------------------------------------------------------------//
+
 
 
     //-----------------------------------------------------------------------//
-    //**************************** MAIN APP VIEW ****************************//
+    //************************* FULL TODO LIST VIEW *************************//
     /**
      * Main todo list view - View comprising the entire Todo list
      * Renders the full list of todo items, calling TodoView for each one.
@@ -165,9 +220,9 @@
 
         el: '#todoapp',
 
-        initialize: function() {
+        initialize: function appAppView_initialize() {
             this.input = this.$('#new-todo'); // defines input box
-            app.todoList.on('add', this.addOne, this);
+            app.todoList.on('add', this.addAll, this);
             app.todoList.on('reset', this.addAll, this);
             app.todoList.fetch(); // Loads list from local storage
         },
@@ -180,7 +235,7 @@
          * Add a todo list item (TodoView) to the todo list collection ()
          * @param  {Object} e  - jQuery Event object
          */
-        createTodoOnEnter: function(e) {
+        createTodoOnEnter: function appAppView_createTodoOnEnter(e) {
             if (e.which !== 13 || !this.input.val().trim()) { // ENTER_KEY = 13
                 return;
             }
@@ -195,7 +250,7 @@
          *
          * @param {BBModel} todo - Backbone Model object to bind to the new TodoView object
          */
-        addOne: function(todo) {
+        addOne: function appAppView_addOne(todo) {
             var view = new TodoView({
                 model: todo
             });
@@ -205,24 +260,31 @@
         /**
          * Add all todo list items to the collection.
          */
-        addAll: function() {
+        addAll: function appAppView_addAll() {
             this.$('#todo-list').html(''); // clean the todo list
 
             //Catches various routes - e.g. case pending runs at origin/file.html#pending
+            //window.filter returns the string past the # in the URI
             switch (window.filter) {
                 case 'pending':
+                    console.log('window.filter:');
+                    console.log(window.filter);
                     _.each(app.todoList.remaining(), this.addOne);
                     break;
                 case 'completed':
+                    console.log('window.filter:');
+                    console.log(window.filter);
                     _.each(app.todoList.completed(), this.addOne());
                     break;
                 default:
+                    console.log('window.filter:');
+                    console.log(window.filter);
                     app.todoList.each(this.addOne, this);
                     break;
             }
         },
 
-        newAttributes: function() {
+        newAttributes: function appAppView_newAttributes() {
             return {
                 title: this.input.val().trim(),
                 completed: false
@@ -230,33 +292,40 @@
         }
 
     });
-    //************************** END MAIN APP VIEW **************************//
+    //*********************** END FULL TODO LIST VIEW ***********************//
     //-----------------------------------------------------------------------//
 
 
+
+
+    //------------------------------------------
+    // Routers
+    //------------------------------------------
+    //
     //-----------------------------------------------------------------------//
     //******************************* ROUTER ********************************//
-
     app.Router = Backbone.Router.extend({
         routes: {
             '*filter': 'setFilter'
         },
         setFilter: function(params) {
             console.log('app.router.params = ' + params);
-            window.filter = (params) ? (params.trim() || '') : '';
+            window.filter = params.trim() || '';
+            // window.filter = (params) ? (params.trim() || '') : '';
             app.todoList.trigger('reset');
         }
     });
 
-    var accounts = new Backbone.Collection();
-    accounts.url = '/accounts';
-    accounts.localStorage = new Store('accounts-store');
+    // var accounts = new Backbone.Collection();
+    // accounts.url = '/accounts';
+    // accounts.localStorage = new Store('accounts-store');
 
-    accounts.fetch();
-
-
+    // accounts.fetch();
     //***************************** END ROUTER ******************************//
     //-----------------------------------------------------------------------//
+
+
+
 
     //--------------
     // Initializers
