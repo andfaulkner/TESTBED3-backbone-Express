@@ -16,6 +16,16 @@ module.exports = {
         levelOfLog: 'debug'
     },
 
+    // Redis configuration settings
+    'redis': {
+        port : 9999,
+        host : '127.0.0.1',
+        options : {
+            parser : 'javascript',
+            return_buffer : false
+        },
+    },
+
     'winstonLogs': {
         exitOnError: false,
         consoleLogLevel: 'warn',

@@ -1,37 +1,48 @@
 /**
  * LAUNCH EXPRESSJS SERVER FROM HERE.
  */
+
+//************************ GLOBAL NODE MODULES ***********************//
+//Fix root path referenced by require
 require('rootpath')();
+
+//Ensure infinite number of concurrent sockets can be open
 var http = require('http');
 http.globalAgent.maxSockets = Infinity;
 
-//ECMA 6 POLYFILL
+var path = require('path');
+//********************************************************************//
+
+// get app settings
+var config = require('config/default');
+
+//**************************** ECMA6 SETUP ****************************//
+//ECMA 6 polyfill modules
 require('harmonize')(); // ensure es6 works
 require('babel/register');
+
+//unpolyfillable function patched with a "close-enough" behaviour
 Object.getPrototypeOf.toString = function() {
     return Object.toString();
 };
+//********************************************************************//
 
-
+//**************************** ERROR HANDLING ****************************//
 if (process.env.NODE_ENV !== 'production') {
     Error.stackTraceLimit = Infinity;
     require('trace'); // active long stack trace
     require('clarify'); // Exclude node internal calls from the stack
 }
 
-require('./server/uncaught-error-handler');
-
-var path = require('path');
-
-var config = require('config/default');
 var log = require('server/winston-logger');
+require('./server/uncaught-error-handler');
+//********************************************************************//
 
 //******************************* SERVER *******************************//
 var express = require('express');
 
-var app = express()
-    .use('/', express.static(path.join(__dirname, 'public')))
-    .use('/api', require('server/RESTful'));
+var app = require('server/rest-api')(express())
+    .use('/', express.static(path.join(__dirname, 'public')));
 //**********************************************************************//
 
 //Build Express app itself (loads & runs a constructor module), serves over web
