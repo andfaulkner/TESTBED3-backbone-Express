@@ -23,15 +23,15 @@ require('./server/uncaught-error-handler');
 
 var path = require('path');
 
-var config = require('./config/default.js');
-var log = require('./server/winston-logger.js');
+var config = require('config/default');
+var log = require('server/winston-logger');
 
 //******************************* SERVER *******************************//
 var express = require('express');
 
-var app = express();
-
-app.use('/', express.static(path.join(__dirname, 'public')));
+var app = express()
+    .use('/', express.static(path.join(__dirname, 'public')))
+    .use('/api', require('server/RESTful'));
 //**********************************************************************//
 
 //Build Express app itself (loads & runs a constructor module), serves over web

@@ -274,7 +274,7 @@
                 case 'completed':
                     console.log('window.filter:');
                     console.log(window.filter);
-                    _.each(app.todoList.completed(), this.addOne());
+                    _.each(app.todoList.completed(), this.addOne);
                     break;
                 default:
                     console.log('window.filter:');
@@ -310,8 +310,8 @@
         },
         setFilter: function(params) {
             console.log('app.router.params = ' + params);
-            window.filter = params.trim() || '';
-            // window.filter = (params) ? (params.trim() || '') : '';
+            // window.filter = params.trim() || '';
+            window.filter = (params) ? (params.trim() || '') : '';
             app.todoList.trigger('reset');
         }
     });

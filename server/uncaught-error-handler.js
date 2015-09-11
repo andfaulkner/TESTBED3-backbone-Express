@@ -1,8 +1,8 @@
-var log = require('./winston-logger');
+var log = require('server/winston-logger');
 var _ = require('lodash');
 require('colors');
 require('string').extendPrototype();
-var config = require('../config/default');
+var config = require('config/default');
 
 module.exports = (function uncaughtErrorHandler(){
 
