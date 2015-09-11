@@ -1,4 +1,4 @@
-var log = require('server/winston-logger');
+var log = require('server/debug/winston-logger');
 var _ = require('lodash');
 require('colors');
 require('string').extendPrototype();

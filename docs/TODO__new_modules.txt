@@ -1,3 +1,24 @@
+MUST - EXCELLENT FRAMEWORK:::
+http://vidigami.github.io/backbone-orm/index.html
+backbone-ORM
+
+For the REST API part
+node-restify
+--- seems to play nice with express
+    --- integrate restify with express?
+        --- express handling different routes from restify, perhaps
+
+Great backbone front-to-back tutorial
+https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4
+
+Decent info here
+http://bigspaceship.github.io/blog/2014/05/14/how-to-create-a-rest-api-with-node-dot-js/
+
+
+More commands for me:
+https://gist.github.com/andfaulkner/b396b1869c9e1392f109
+
+
 npm i -g terminal-tree      --      https://www.npmjs.com/package/terminal-tree
     --  Make a tree in the cli. Looks really cool. Handy for debugging.
 
@@ -29,3 +50,26 @@ add this to package.json:
 
 
 GRAB POSTMAN!
+
+MUST:::
+    backbone-db-redis
+    backbone-db
+        -- let BB interact with a db - Backbone database interface
+    backbone-db-elasticsearch
+    backbone-blueprint
+        -- BB schemas
+
+    ALL TOGETHER:
+        serverbone
+            https://www.npmjs.com/package/serverbone
+            --- and a nice example:
+                https://github.com/kosmikko/serverbone-example
+
+Backbone ORM / Rest?
+http://vidigami.github.io/backbone-orm/backbone-rest.html
+
+BUSBOY?
+
+
+NODE_CONSOLE?
+npm install node-console

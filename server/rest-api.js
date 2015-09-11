@@ -1,11 +1,16 @@
+//
+// REST API SETUP (prior to defining routes)
+//
 
-//Logging
-var log = require('server/winston-logger');
-
-//Configuration data
+var log = require('server/debug/winston-logger');
 var config = require('config/default');
-var redisConfig = config.redis;
 
+var Redis = require('redis');
+
+// Create the publish & subscribe clients for redis to send to the `backbone-redis` module
+var db  = Redis.createClient(config.redis.port, config.redis.host, config.redis.options),
+    pub = Redis.createClient(config.redis.port, config.redis.host, config.redis.options),
+    sub = Redis.createClient(config.redis.port, config.redis.host, config.redis.options);
 
 
 module.exports = function restAPIModule(app) {
