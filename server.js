@@ -1,6 +1,7 @@
 /**
  * LAUNCH EXPRESSJS SERVER FROM HERE.
  */
+require('rootpath')();
 var http = require('http');
 http.globalAgent.maxSockets = Infinity;
 
