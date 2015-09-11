@@ -8,12 +8,16 @@ node-restify
     --- integrate restify with express?
         --- express handling different routes from restify, perhaps
 
+______________________________BB EXAMPLES AND TUTORIALS FOR REST ETC._________________________________
 Great backbone front-to-back tutorial
 https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4
 
 Decent info here
 http://bigspaceship.github.io/blog/2014/05/14/how-to-create-a-rest-api-with-node-dot-js/
 
+Developing Backbone apps book:
+http://addyosmani.github.io/backbone-fundamentals/
+___________________________________________________________________________________________________
 
 More commands for me:
 https://gist.github.com/andfaulkner/b396b1869c9e1392f109
