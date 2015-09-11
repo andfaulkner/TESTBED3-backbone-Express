@@ -1,0 +1,14 @@
+npm i -g terminal-tree      --      https://www.npmjs.com/package/terminal-tree
+    --  Make a tree in the cli. Looks really cool. Handy for debugging.
+
+
+npm install https://github.com/jaz303/spawn-terminal.git --save
+--- launch a new terminal window :)
+
+____________________________ ROOTPATH ____________________________
+https://www.npmjs.com/package/rootpath
+npm install rootpath --save
+- at the top of the first file:
+    require('rootpath')();
+        - ...and all paths become relative to the root directory
+__________________________________________________________________
