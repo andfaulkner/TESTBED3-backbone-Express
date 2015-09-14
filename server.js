@@ -44,6 +44,9 @@ require('server/debug/uncaught-error-handler');
 //******************************* SERVER *******************************//
 var express = require('express');
 
+var io = require('socket.io');
+    io = io.listen(app);
+
 var app = require('server/middlewares')(express())
     .use('/', express.static(path.join(__dirname, 'public')));
 //**********************************************************************//

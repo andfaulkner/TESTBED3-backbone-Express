@@ -8,6 +8,8 @@ module.exports = {
 
     'appName': 'express-backbone-testbed-3',
 
+    '__projrootdir': path.join(__dirname, '..'),
+
     'server': {
         port: 3002
     },

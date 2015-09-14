@@ -176,24 +176,7 @@
          */
         toggleCompleted: function TodoView_toggleCompleted() {
             console.log(this.$el); //--> entire DOM of single todo list item (<li><div class="view">...etc...</div></li>)
-
-            //Determine what to save
-            // var isDone = this.$el.find('.toggle')[0].checked;
-
-            // console.log(isDone); console.log(this.model);
             this.model.toggle();
-
-            // this.model.toggle({ completed: !this.model.get('completed') });
-
-            //Save new val in db (true if checkbox checked, false if not). CB runs based on if save worked.
-            // this.model.save({ completed: isDone }, {
-            //     success: function View_toggleCompletedSuccess(model, response, options){
-            //         console.log('to-do item successfully saved!');
-            //     },
-            //     error: function View_toggleCompletedError(model, response, options){
-            //         console.log('to-do item failed to save');
-            //     },
-            // });
         },
 
         /**

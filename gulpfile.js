@@ -1,4 +1,8 @@
 require('harmonize')(); // ensure es6 works
+
+//Fix root path referenced by require
+require('rootpath')();
+
 //console.log(Error.stackTraceLimit);
 //console.dir(process, {showHidden: true, depth: 20, colors: true });
 //console.dir(process.execArgv, {showHidden: true, depth: 20, colors: true });
@@ -25,7 +29,7 @@ require('shelljs/global');
 require('babel/register');
 Object.getPrototypeOf.toString = (() => (Object.toString()));
 
-var nodemonConfig = require('configs/nodemon.json');
+var nodemonConfig = require('config/nodemon.json');
 
 //------------------------------- PLUGINS --------------------------------//
 //PACKAGED GULP PLUGINS --- AVAILABLE VIA 'p.nameOfPackage'
@@ -191,7 +195,7 @@ gulp.task('server', function livereloadServer(){
         .pipe(p.nodemon(nodemonConfig)
             .on('restart', () => {
                livereload.listen();
-               return gulp.src('app/server.js')   // when the app restarts, run livereload.
+               return gulp.src('server.js')   // when the app restarts, run livereload.
                     .pipe(consoleTaskReport())
                     .pipe(p.tap(() => {
                         console.log('\n' + gutil.colors.white.bold.bgGreen('\n' +

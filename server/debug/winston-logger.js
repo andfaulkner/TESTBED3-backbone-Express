@@ -11,7 +11,9 @@ require('colors');
 require('string');
 
 //app config
-var config = require('config/default').winstonLogs;
+var config = require('config/default');
+var __projrootdir = config.__projrootdir;
+config = config.winstonLogs;
 
 //TODO this is not DRY - the filenames are declared twice
 var logFileNames = ['excessive-data-log.log', 'all-logs.log', 'console-log-record.log'];
@@ -29,6 +31,8 @@ var fileExists = function(filePath, callback) {
 
 //Get all log file paths, create each log file that doesn't exist
 logFileNames.forEach(function(logFileName) {
+    console.log(logFileName);
+    console.log(__projrootdir);
     var logFile = path.join(__projrootdir, 'logs', logFileName);
     console.dir(logFile);
     console.dir(path.join(process.mainModule.filename, '..'));

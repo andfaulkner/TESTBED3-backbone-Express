@@ -1,0 +1,21 @@
+{
+    "restartable": "rs",
+    "verbose": true,
+    "execMap": {
+        "js": "node --harmony --harmony_scoping --harmony_modules --stack-trace-limit=1000 server.js"
+    },
+    "watch": [
+        "./server",
+        "./.build",
+        "./config"
+    ],
+    "ignore": [
+        ".git", "node_modules", "bower_components", ".sass-cache",
+        "gulpfile.js", "webpack.*", "./config/nodemon.json", "*.sublime-*",
+        "*.diff", "*.log", ".cvsignore", ".gitignore"
+    ],
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "ext": "js json html htm css scss sass less png svg jpg gif txt hbs ejs rb xml jpeg avi mp3 mp4 mpg py txt env dust"
+}
