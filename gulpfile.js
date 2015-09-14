@@ -195,13 +195,14 @@ gulp.task('server', function livereloadServer(){
         })
         .on('restart', function(){
            return gulp.src('server')   // when the app restarts, run livereload.
-                .pipe(livereload())
                 .pipe(consoleTaskReport())
                 .pipe(p.tap(() => {
                     console.log('\n' + gutil.colors.white.bold.bgGreen('\n' +
                     '     .......... RELOADING PAGE, PLEASE WAIT ..........\n'));
                 }))
-                .pipe(notify({message: 'RELOADING PAGE, PLEASE WAIT', onLast: true}));
+                .pipe(notify({message: 'RELOADING PAGE, PLEASE WAIT', onLast: true}))
+                .pipe(wait(1000))
+                .pipe(livereload());
         }));
     });
 //################################################################################

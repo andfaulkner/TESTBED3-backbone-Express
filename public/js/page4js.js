@@ -7,17 +7,36 @@
     var bearModelInsts = { };
 
 
-    var bearModel = Backbone.Model.extend({
+    //**************************** BEAR MODELS ****************************//
+   var BearModel = Backbone.Model.extend({
         initialize: function initializeBear(bear){
             this.set(bear);
         }
     });
+    //*********************************************************************//
 
     //**************************** BEAR COLLECTION ****************************//
-    var bearCollection = Backbone.Collection.extend({
-        model: bearModel
+    var BearCollection = Backbone.Collection.extend({
+        model: BearModel,
+        url: '/api/bears'
     });
+
+    var bearCollection = new BearCollection(bears);
+    console.log(bearCollection);
     //*************************************************************************//
+
+    var BearView = Backbone.View.extend({
+
+        tagName: 'textContent',
+        className: 'bear-content',
+
+        initialize: function BearView_initialize(){
+            this.listenTo(this.model, "change", this.render);
+        }
+    });
+
+
+
 
     // _.each(bears, function(bear){
 

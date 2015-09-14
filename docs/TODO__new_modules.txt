@@ -1,3 +1,9 @@
+GET THIS INTO BASHRC!:
+alias murdernode='ps aux | grep "gulp\|node\|npm" | cut -d" " -f2 | sudo xargs kill -9'
+
+GREAT BB TUTORIAL:
+http://stackoverflow.com/questions/18504235/understand-backbone-js-rest-calls
+
 MUST - EXCELLENT FRAMEWORK:::
 http://vidigami.github.io/backbone-orm/index.html
 backbone-ORM
