@@ -74,13 +74,11 @@
 	    var BearView = Backbone.View.extend({
 
 	        tagName: 'textContent',
-
 	        className: 'bear-content',
 
 	        initialize: function BearView_initialize(){
 	            this.listenTo(this.model, "change", this.render);
 	        }
-
 	    });
 
 
