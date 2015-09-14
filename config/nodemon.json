@@ -1,8 +1,9 @@
 {
     "restartable": "rs",
     "verbose": true,
+    "script": "server.js",
     "execMap": {
-        "js": "node --harmony --harmony_scoping --harmony_modules --stack-trace-limit=1000 server.js"
+        "js": "node --harmony --harmony_scoping --harmony_modules --stack-trace-limit=1000"
     },
     "watch": [
         "./server",

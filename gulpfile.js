@@ -1,5 +1,3 @@
-require('harmonize')(); // ensure es6 works
-
 //Fix root path referenced by require
 require('rootpath')();
 
@@ -76,24 +74,20 @@ var wait = require('gulp-wait');
 
 //------------------------------ CONSTANTS -------------------------------//
 var SRC = {
-    'root': ['./app/**/*.*'],
-    'static': [
-        './app/**/*.*',
-        '!./app/**/*.js',
-        '!./app/**/*.json',
-        '!./app/**/*.dust'
-    ],
+    'root': ['!./node_modules/**', './**'],
+    'public': 'public/**',
+    'publicJS': 'public/js/**/*.js',
     'publicStatic': [
-        './app/libs/**/*.*',
-        '!./app/libs/**/*.js'
+        'public/**',
+        '!public/js/**'
     ],
-    'tpl': './app/**/*.dust',
-    'scripts': './app/components/components'
+    'tpl': 'app/**/*.dust',
+    'scripts': 'app/components/components'
 };
 
 var DEST = {
-    'root': './.build',
-    'publicStatic': './.build/public'
+    'root': '.build',
+    'publicStatic': '.build/public',
 };
 //------------------------------------------------------------------------//
 
@@ -135,7 +129,7 @@ var fileExists = function fileExists(filePath, callback){
         if (err) return callback(false);
         return callback(stats.isFile());
     });
-}
+};
 
 //------------------------------------------------------------------------//
 
@@ -151,7 +145,7 @@ var consoleTaskReport = lazypipe()
     .pipe(p.print);
 
 var newerThanRootIfNotProduction = lazypipe()
-    .pipe(p.ifElse, !args.production, p.newer.bind(this, DEST));
+    .pipe(p.ifElse, !args.production, p.newer.bind(this, DEST.root));
 
 
 //
@@ -190,34 +184,38 @@ gulp.task('get-tasks', () =>
 //#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LIVERELOAD SERVER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //################################################################################
 gulp.task('server', function livereloadServer(){
-    livereload.listen();                    // listen for changes
+    livereload.listen();
     return consoleTaskReport()
-        .pipe(p.nodemon(nodemonConfig)
-            .on('restart', () => {
-               livereload.listen();
-               return gulp.src('server.js')   // when the app restarts, run livereload.
-                    .pipe(consoleTaskReport())
-                    .pipe(p.tap(() => {
-                        console.log('\n' + gutil.colors.white.bold.bgGreen('\n' +
-                        '     .......... RELOADING PAGE, PLEASE WAIT ..........\n'));
-                    }))
-                    .pipe(notify({message: 'RELOADING PAGE, PLEASE WAIT', onLast: true}))
-                    .pipe(wait(1500))
-                    .pipe(livereload());
+        .pipe(p.nodemon({
+            script: 'server.js',
+            ext: 'js, html, css, scss, json, less, ico',
+            execMap: {
+                "js": "node --harmony --harmony_scoping --harmony_modules --stack-trace-limit=1000"
+            }
+        })
+        .on('restart', function(){
+           return gulp.src('server')   // when the app restarts, run livereload.
+                .pipe(livereload())
+                .pipe(consoleTaskReport())
+                .pipe(p.tap(() => {
+                    console.log('\n' + gutil.colors.white.bold.bgGreen('\n' +
+                    '     .......... RELOADING PAGE, PLEASE WAIT ..........\n'));
+                }))
+                .pipe(notify({message: 'RELOADING PAGE, PLEASE WAIT', onLast: true}));
         }));
-
     });
 //################################################################################
 
-gulp.task('webpack', function(){
-    return gulp.src(SRC.root)
+gulp.task('webpack', function() {
+    return gulp.src(SRC.publicJS)
+        .pipe(newerThanRootIfNotProduction())
         .pipe(p.webpack(require('./webpack.config.js')))
-        .pipe(gulp.dest(DEST.root))
         .pipe(notify({
             onLast: true,
             message: 'WEBPACKING COMPLETED'
-        }));
-    });
+        }))
+        .pipe(gulp.dest(DEST.root));
+});
 
 gulp.task('dust', function(){
     return gulp.src(SRC.tpl)
@@ -237,13 +235,13 @@ gulp.task('dust', function(){
 
 gulp.task('copy-static', function(){
     return gulp.src(SRC.publicStatic)
+        .pipe(newerThanRootIfNotProduction())
         .pipe(gulp.dest(DEST.publicStatic))
         .pipe(notify({
             onLast: true,
             message: 'STATIC ASSETS COPIED'
         }));
 });
-
 
 //################################################################################
 //#~~~~~~~~~~~~~~~~~ CONVERT COMMONJS LIBS TO AND FROM REQUIREJS ~~~~~~~~~~~~~~~~~~
@@ -254,6 +252,8 @@ gulp.task('copy-static', function(){
 //gulp.task('build', ['copy-static', 'dust', 'webpack']);
 gulp.task('build', ['copy-static', 'webpack']);
 
-gulp.task('watch', () => { gulp.watch(SRC.root, ['build']); });
+gulp.task('watch', function(){
+    gulp.watch(SRC.public, ['build']);
+});
 
 gulp.task('default', () => runSequence('build', 'watch') );

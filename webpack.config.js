@@ -1,3 +1,4 @@
+console.time('webpack config entirety');
 require('harmonize')(); // ensure es6 works
 
 //Fix root path referenced by require
@@ -22,14 +23,18 @@ var glob = require('glob');
 
 var entryPts = (function(){
     var retObj = { };
+    console.time('entryPts');
     var files = _.map(glob.sync('./public/js/+(page*|index*).js'),
                       (file) => _.rest(file.split('/')).join('/'));
     _.each(files, function(file){ retObj[file] = './' + file; });
+    console.timeEnd('entryPts');
     return retObj;
 }());
 
 console.log('entryPts');
 console.log(entryPts);
+
+console.time('webpack module exports');
 
 module.exports = {
 
@@ -58,7 +63,7 @@ module.exports = {
     bail: false,
 
     //Rebuild when any file pointed to changes
-    watch: true,
+    watch: false,
 
     //Find libraries in the following locations
     resolve: {
@@ -68,7 +73,7 @@ module.exports = {
         modulesDirectories: ['node_modules'],
     },
 
-    debug: false,
+    debug: true,
 
     plugins: [
 
@@ -83,8 +88,10 @@ module.exports = {
             // jQuery: 'jquery',
             // 'window.jQuery': 'jquery',
             // _: 'lodash',
-            _$: 'lodash/lodash',
+            _$: 'lodash',
             async: 'async'
         })
     ],
 };
+console.timeEnd('webpack module exports');
+console.timeEnd('webpack config entirety');

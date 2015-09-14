@@ -36,7 +36,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('trace'); // active long stack trace
     require('clarify'); // Exclude node internal calls from the stack
 }
-//
+
 var log = require('server/debug/winston-logger');
 require('server/debug/uncaught-error-handler');
 //********************************************************************//
@@ -48,7 +48,7 @@ var io = require('socket.io');
     io = io.listen(app);
 
 var app = require('server/middlewares')(express())
-    .use('/', express.static(path.join(__dirname, 'public')));
+    .use('/', express.static(path.join(__dirname, '.build/public')));
 //**********************************************************************//
 
 //Build Express app itself (loads & runs a constructor module), serves over web
