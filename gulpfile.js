@@ -1,3 +1,5 @@
+require('harmonize')(); // ensure es6 works
+
 //Fix root path referenced by require
 require('rootpath')();
 
