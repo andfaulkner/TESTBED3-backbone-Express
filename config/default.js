@@ -30,7 +30,7 @@ module.exports = {
 
     'winstonLogs': {
         exitOnError: false,
-        consoleLogLevel: 'warn',
+        consoleLogLevel: 'info',
         senecaLogLevel: 'warn',
     }
 };

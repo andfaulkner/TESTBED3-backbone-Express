@@ -48,12 +48,14 @@ var io = require('socket.io');
     io = io.listen(app);
 
 var app = require('server/middlewares')(express())
-    .use('/', express.static(path.join(__dirname, '.build/public')));
+    .use('/', express.static(path.join(__dirname, '.build/client')));
 //**********************************************************************//
 
 //Build Express app itself (loads & runs a constructor module), serves over web
-require('server/rest-api')(app)
+require('server/rest-api')(app) // server
     .listen(config.server.port, function() {
-        log.info('[%s] Server running at http://127.0.0.1:8080/', process.pid);
-        return log.info('example app listening! Bootup done!'); // server
+        log.info('Server running: http://127.0.0.1:' +
+                 config.server.port + '/');
+        log.info('Server process id (pid): ' + process.pid);
+        return log.info('Wow. So server. Very running. Much bootup success. Such win.');
     });

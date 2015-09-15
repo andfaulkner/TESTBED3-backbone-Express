@@ -24,7 +24,7 @@ var glob = require('glob');
 var entryPts = (function(){
     var retObj = { };
     console.time('entryPts');
-    var files = _.map(glob.sync('./public/js/+(page*|index*).js'),
+    var files = _.map(glob.sync('./client/js/+(page*|index*).js'),
                       (file) => _.rest(file.split('/')).join('/'));
     _.each(files, function(file){ retObj[file] = './' + file; });
     console.timeEnd('entryPts');
@@ -39,43 +39,43 @@ console.time('webpack module exports');
 module.exports = {
 
     //location from which all other routes are derived - base path
-    context: __dirname,
+    'context': __dirname,
 
     //left side is output file; right side is input file (left used for [name] in output)
-    entry: entryPts,
+    'entry': entryPts,
 
-    output: {
+    'output': {
         path: path.join(__dirname, '.build'),
         filename: '[name]' //B sure 2 use [name] or [id] in filename if using multiple entry pts
     },
 
     //Handle SCSS files - convert to CSS    //TODO make this work with '.less' files
-    module: {
+    'module': {
         loaders: [
             { test: /\.es6.js$/, loader: 'babel-loader' }
         ]
     },
 
     //compile for use in a browser environment
-    target: 'web',
+    'target': 'web',
 
     //Keep going even if an error occurs
-    bail: false,
+    'bail': false,
 
     //Rebuild when any file pointed to changes
-    watch: false,
+    'watch': false,
 
     //Find libraries in the following locations
-    resolve: {
+    'resolve': {
         root: [path.join(__dirname, 'node_modules')],
         fallback: [path.join(__dirname, 'node_modules')],
         extensions: ['', '.js'],
         modulesDirectories: ['node_modules'],
     },
 
-    debug: true,
+    'debug': true,
 
-    plugins: [
+    'plugins': [
 
         //Remove duplicate JS code
         new webpack.optimize.DedupePlugin(),
@@ -84,12 +84,16 @@ module.exports = {
 
         //make the following globally available
         new webpack.ProvidePlugin({
-            // $: 'jquery',
-            // jQuery: 'jquery',
-            // 'window.jQuery': 'jquery',
-            // _: 'lodash',
-            _$: 'lodash',
-            async: 'async'
+            _: 'lodash',
+            async: 'async',
+            Backbone: 'backbone',
+            $: 'jquery',
+            jQuery: 'jquery',
+            jquery: 'jquery',
+            'window.jquery': 'jquery',
+            bootstrap: 'bootstrap',
+            React: 'react',
+            jsxTransformer: 'react/dist/JSXTransformer'
         })
     ],
 };

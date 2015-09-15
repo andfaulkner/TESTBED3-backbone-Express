@@ -7,11 +7,11 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>Page 4</title>
 
     <!-- Bootstrap core CSS & custom styles for this template-->
-    <link href="lib/bootstrap/bootstrap.css" rel="stylesheet">
-    <link href="lib/bootstrap/starter-template.css" rel="stylesheet">
+    <link href="../lib/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="../lib/bootstrap/starter-template.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -46,35 +46,25 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
       </div>
 
     </div><!-- /.container -->
 
-    <div id="container">Loading...</div>
+    <div id="container">Page 4</div>
 
+    <form action="/api/bears" method="post">
+        <ul>
+            <ul><input type="text" name="bearType" /></ul>
+            <ul><input type="text" name="favoriteFood" /></ul>
+            <ul><input type="text" name="home" /></ul>
+            <ul><input type="text" name="badassAsFuck" /></ul>
+            <ul><input type="submit" name="submit" value="Add Bear" /></ul>
+        </ul>
+    </form>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
+    <!-- App Javascript - also contains all libraries
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="lib/bootstrap/bootstrap.js"></script>
-    <script src="lib/bootstrap/ie10-viewport-bug-workaround.js"></script>
-
-    <script>
-    var $ = $.noConflict();
-    </script>
-
-    <script src="lib/jquery/jquery-2.1.4.js"></script>
-
-    <!-- BACKBONE AND UNDERSCORE -->
-    <script src="lib/underscore/underscore.js"></script>
-    <script src="lib/backbone/backbone.js"></script>
-
-    <!-- App Javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/indexjs.js"></script>
+    <!-- ================================================== -->
+    <script src="../js/page4js.js"></script>
 
 </body></html>

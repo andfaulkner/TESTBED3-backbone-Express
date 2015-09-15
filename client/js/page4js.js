@@ -1,3 +1,7 @@
+// globals: _, Backbone, $, bootstrap, React
+require('../../client/lib/bootstrap/ie10-viewport-bug-workaround');
+
+
 (function page4js_module(_){
     var bears = require('./models/modelData/bears-model-data');
     console.log("in 4!");

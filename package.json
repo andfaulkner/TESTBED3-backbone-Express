@@ -27,6 +27,8 @@
     "node-babel": "^0.1.2",
     "node-console": "^0.3.35",
     "npm": "^2.14.3",
+    "react": "^0.13.3",
+    "react-tools": "^0.13.3",
     "redis": "^1.0.0",
     "rootpath": "^0.1.2",
     "serve-favicon": "^2.3.0",
