@@ -1,0 +1,39 @@
+install oceanic-next-color-scheme
+install Babel
+install Babel-snippets
+install sublimelinter-contrib-eslint
+
+npm install --save-dev eslint babel-eslint babel babel-loader;
+npm install --save json5 react-tools react file-loader url-loader;
+npm install -g eslint babel-eslint babel babel-loader;
+npm install -g react-tools eslint-plugin-react;
+
+open a .jsx file
+- View --> Syntax --> Open All With Current Extension As... -->
+    Babel --> Javascript (Babel)
+- Preferences --> Settings - More --> Syntax Specific (User)
+    - make it equal this:
+{
+    "extensions":
+    [
+        "jsx"
+    ],
+    "ignored_packages":
+    [
+        "JSHint Gutter",
+        "SublimeLinter-jshint",
+        "JavaScript",
+        "JSHint"
+    ]
+}
+
+
+grab the eslintrc file
+
+use /*eslint-env node */  atop files to change context
+use /*global var1, var2*/ to specify globals
+use /*eslint-disable */ to disable jslint for a section, ended by /*eslint-enable */
+
+
+Key:
+http://eslint.org/docs/user-guide/configuring.html

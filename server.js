@@ -25,7 +25,7 @@ require('babel/register');
 require('babel/polyfill');
 
 //unpolyfillable function patched with a "close-enough" behaviour
-Object.getPrototypeOf.toString = function() {
+Object.getPrototypeOf.toString = function objToStringPolyfill() {
     return Object.toString();
 };
 //********************************************************************//
@@ -44,18 +44,15 @@ require('server/debug/uncaught-error-handler');
 //******************************* SERVER *******************************//
 var express = require('express');
 
-var io = require('socket.io');
-    io = io.listen(app);
-
 var app = require('server/middlewares')(express())
     .use('/', express.static(path.join(__dirname, '.build/client')));
 //**********************************************************************//
 
 //Build Express app itself (loads & runs a constructor module), serves over web
-require('server/rest-api')(app) // server
-    .listen(config.server.port, function() {
+require('socket.io').listen(require('server/rest-api')(app) // server
+    .listen(config.server.port, function startServer() {
         log.info('Server running: http://127.0.0.1:' +
                  config.server.port + '/');
         log.info('Server process id (pid): ' + process.pid);
         return log.info('Wow. So server. Very running. Much bootup success. Such win.');
-    });
+    }));

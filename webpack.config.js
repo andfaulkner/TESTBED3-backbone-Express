@@ -52,7 +52,8 @@ module.exports = {
     //Handle SCSS files - convert to CSS    //TODO make this work with '.less' files
     'module': {
         loaders: [
-            { test: /\.es6.js$/, loader: 'babel-loader' }
+            // { test: /\.es6.js$/, loader: 'babel-loader' }
+            { test: /\.jsx$/, loader: 'babel-loader' }
         ]
     },
 
@@ -69,7 +70,7 @@ module.exports = {
     'resolve': {
         root: [path.join(__dirname, 'node_modules')],
         fallback: [path.join(__dirname, 'node_modules')],
-        extensions: ['', '.js'],
+        extensions: ['', '.js', '.json', '.jsx'],
         modulesDirectories: ['node_modules'],
     },
 
@@ -92,8 +93,7 @@ module.exports = {
             jquery: 'jquery',
             'window.jquery': 'jquery',
             bootstrap: 'bootstrap',
-            React: 'react',
-            jsxTransformer: 'react/dist/JSXTransformer'
+            React: 'react'
         })
     ],
 };

@@ -1,10 +1,12 @@
 // globals: _, Backbone, $, bootstrap, React
 require('../../client/lib/bootstrap/ie10-viewport-bug-workaround');
+require('./react-stuff/page4js-react-stuff.jsx');
 
+// console.log(JSXTransformer);
 
 (function page4js_module(_){
     var bears = require('./models/modelData/bears-model-data');
-    console.log("in 4!");
+    console.log('in 4!');
     console.log(bears);
 
     var bearModels = { };
@@ -35,7 +37,7 @@ require('../../client/lib/bootstrap/ie10-viewport-bug-workaround');
         className: 'bear-content',
 
         initialize: function BearView_initialize(){
-            this.listenTo(this.model, "change", this.render);
+            this.listenTo(this.model, 'change', this.render);
         }
     });
 
