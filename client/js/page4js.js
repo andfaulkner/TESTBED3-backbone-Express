@@ -1,8 +1,6 @@
-// globals: _, Backbone, $, bootstrap, React
+/*global _, Backbone, $, bootstrap, React*/
 require('../../client/lib/bootstrap/ie10-viewport-bug-workaround');
 require('./react-stuff/page4js-react-stuff.jsx');
-
-// console.log(JSXTransformer);
 
 (function page4js_module(_){
     var bears = require('./models/modelData/bears-model-data');
@@ -14,7 +12,7 @@ require('./react-stuff/page4js-react-stuff.jsx');
 
 
     //**************************** BEAR MODELS ****************************//
-   var BearModel = Backbone.Model.extend({
+    var BearModel = Backbone.Model.extend({
         initialize: function initializeBear(bear){
             this.set(bear);
         }

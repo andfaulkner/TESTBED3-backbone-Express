@@ -1,12 +1,20 @@
 install oceanic-next-color-scheme
+switch to oceanic-next-color-scheme
+
 install Babel
 install Babel-snippets
 install sublimelinter-contrib-eslint
 
-npm install --save-dev eslint babel-eslint babel babel-loader;
-npm install --save json5 react-tools react file-loader url-loader;
+npm install --save-dev babel eslint babel-eslint babel-loader;
+npm install --save-dev file-loader url-loader;
+npm install --save json5 react-tools react;
 npm install -g eslint babel-eslint babel babel-loader;
 npm install -g react-tools eslint-plugin-react;
+npm install eslint-plugin-babel -D;
+npm install eslint-plugin-babel -g;
+npm install eslint-plugin-babel --save-dev;
+
+get react plugin
 
 open a .jsx file
 - View --> Syntax --> Open All With Current Extension As... -->
@@ -27,8 +35,13 @@ open a .jsx file
     ]
 }
 
+Uninstall JSHint, SublimeLinter-jshint, JSHint Gutter
 
-grab the eslintrc file
+Install
+https://github.com/babel/eslint-plugin-babel
+
+grab the .eslintrc and .eslintignore files
+add configs to [projname].sublime-project file
 
 use /*eslint-env node */  atop files to change context
 use /*global var1, var2*/ to specify globals

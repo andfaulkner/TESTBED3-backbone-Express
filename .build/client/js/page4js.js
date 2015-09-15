@@ -44,11 +44,9 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_, Backbone) {// globals: _, Backbone, $, bootstrap, React
+	/* WEBPACK VAR INJECTION */(function(_, Backbone) {/*global _, Backbone, $, bootstrap, React*/
 	__webpack_require__(6);
 	__webpack_require__(7);
-
-	// console.log(JSXTransformer);
 
 	(function page4js_module(_){
 	    var bears = __webpack_require__(164);
@@ -60,7 +58,7 @@
 
 
 	    //**************************** BEAR MODELS ****************************//
-	   var BearModel = Backbone.Model.extend({
+	    var BearModel = Backbone.Model.extend({
 	        initialize: function initializeBear(bear){
 	            this.set(bear);
 	        }
@@ -25202,7 +25200,7 @@
 	    var App = _react2['default'].createClass({
 	        displayName: 'App',
 
-	        render: function render() {
+	        render: function App_render() {
 	            return _react2['default'].createElement(
 	                'h1',
 	                null,
@@ -25210,6 +25208,7 @@
 	            );
 	        }
 	    });
+
 	    return 'win!';
 	})();
 

@@ -21,7 +21,7 @@
             "lint_mode": "load/save",
             "linters": {
                 "annotations": {
-                    "@disable": false,
+                    "@disable": true,
                     "args": [],
                     "errors": [
                         "FIXME"
