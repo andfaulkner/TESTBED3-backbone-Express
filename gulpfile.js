@@ -75,11 +75,11 @@ var wait = require('gulp-wait');
 //------------------------------ CONSTANTS -------------------------------//
 var SRC = {
     'root': ['!./node_modules/**', './**'],
-    'public': 'public/**',
-    'publicJS': 'public/js/**/*.js',
-    'publicStatic': [
-        'public/**',
-        '!public/js/**'
+    'client': 'client/**',
+    'clientJS': 'client/js/**/*.js',
+    'clientStatic': [
+        'client/**',
+        '!client/js/**'
     ],
     'tpl': 'app/**/*.dust',
     'scripts': 'app/components/components'
@@ -87,7 +87,7 @@ var SRC = {
 
 var DEST = {
     'root': '.build',
-    'publicStatic': '.build/public',
+    'clientStatic': '.build/client',
 };
 //------------------------------------------------------------------------//
 
@@ -208,7 +208,7 @@ gulp.task('server', function livereloadServer(){
 //################################################################################
 
 gulp.task('webpack', function() {
-    return gulp.src(SRC.publicJS)
+    return gulp.src(SRC.clientJS)
         .pipe(newerThanRootIfNotProduction())
         .pipe(p.webpack(require('./webpack.config.js')))
         .pipe(notify({
@@ -235,9 +235,9 @@ gulp.task('dust', function(){
 
 
 gulp.task('copy-static', function(){
-    return gulp.src(SRC.publicStatic)
+    return gulp.src(SRC.clientStatic)
         .pipe(newerThanRootIfNotProduction())
-        .pipe(gulp.dest(DEST.publicStatic))
+        .pipe(gulp.dest(DEST.clientStatic))
         .pipe(notify({
             onLast: true,
             message: 'STATIC ASSETS COPIED'
@@ -254,7 +254,7 @@ gulp.task('copy-static', function(){
 gulp.task('build', ['copy-static', 'webpack']);
 
 gulp.task('watch', function(){
-    gulp.watch(SRC.public, ['build']);
+    gulp.watch(SRC.client, ['build']);
 });
 
 gulp.task('default', () => runSequence('build', 'watch') );

@@ -4,12 +4,32 @@
 		"selected_items":
 		[
 			[
-				"console",
-				"console.log"
+				"_",
+				"_.each"
+			],
+			[
+				"mo",
+				"module.exports"
+			],
+			[
+				"bv",
+				"bv	Backbone View"
 			],
 			[
 				"b",
-				"bhstart	Backbone.js history start"
+				"bd	Backbone requirejs Module definition"
+			],
+			[
+				"node",
+				"nodeType	Node"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"console",
+				"console.log"
 			],
 			[
 				"be",
@@ -50,10 +70,6 @@
 			[
 				"getM",
 				"getMonth()	Date"
-			],
-			[
-				"req",
-				"req	nodejs--require"
 			],
 			[
 				"sene",
@@ -102,10 +118,6 @@
 			[
 				"iife",
 				"iifelite	nodejs--iife-lite"
-			],
-			[
-				"_",
-				"_.object"
 			],
 			[
 				"cons",
@@ -184,42 +196,37 @@
 	"buffers":
 	[
 		{
+			"contents": "console.time('webpack config entirety');\nrequire('harmonize')(); // ensure es6 works\n\n//Fix root path referenced by require\nrequire('rootpath')();\n\nrequire('babel/register');\nObject.getPrototypeOf.toString = (() => (Object.toString()));\n\n/**\n * Webpack configuration for module handling\n */\nvar path = require('path');\nvar async = require('async');\nvar _      = require('lodash');\nvar webpack = require('webpack');\nvar log = require('./server/debug/winston-logger');\nvar fs = require('fs');\nvar glob = require('glob');\n\n// require('dustjs-linkedin/dist/dust-core');\n// var ExtractTextPlugin = require('extract-text-webpack-plugin');\n\nvar entryPts = (function(){\n    var retObj = { };\n    console.time('entryPts');\n    var files = _.map(glob.sync('./client/js/+(page*|index*).js'),\n                      (file) => _.rest(file.split('/')).join('/'));\n    _.each(files, function(file){ retObj[file] = './' + file; });\n    console.timeEnd('entryPts');\n    return retObj;\n}());\n\nconsole.log('entryPts');\nconsole.log(entryPts);\n\nconsole.time('webpack module exports');\n\nmodule.exports = {\n\n    //location from which all other routes are derived - base path\n    context: __dirname,\n\n    //left side is output file; right side is input file (left used for [name] in output)\n    entry: entryPts,\n\n    output: {\n        path: path.join(__dirname, '.build'),\n        filename: '[name]' //B sure 2 use [name] or [id] in filename if using multiple entry pts\n    },\n\n    //Handle SCSS files - convert to CSS    //TODO make this work with '.less' files\n    module: {\n        loaders: [\n            { test: /\\.es6.js$/, loader: 'babel-loader' }\n        ]\n    },\n\n    //compile for use in a browser environment\n    target: 'web',\n\n    //Keep going even if an error occurs\n    bail: false,\n\n    //Rebuild when any file pointed to changes\n    watch: false,\n\n    //Find libraries in the following locations\n    resolve: {\n        root: [path.join(__dirname, 'node_modules')],\n        fallback: [path.join(__dirname, 'node_modules')],\n        extensions: ['', '.js'],\n        modulesDirectories: ['node_modules'],\n    },\n\n    debug: true,\n\n    plugins: [\n\n        //Remove duplicate JS code\n        new webpack.optimize.DedupePlugin(),\n\n        // new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin('package.json', ['main']),\n\n        //make the following globally available\n        new webpack.ProvidePlugin({\n            _: 'lodash',\n            async: 'async',\n            Backbone: 'backbone',\n            $: 'jquery',\n            jQuery: 'jquery',\n            jquery: 'jquery',\n            'window.jquery': 'jquery',\n            bootstrap: 'bootstrap',\n            React: 'react'\n\n        })\n    ],\n};\nconsole.timeEnd('webpack module exports');\nconsole.timeEnd('webpack config entirety');",
+			"file": "webpack.config.js",
+			"file_size": 2751,
+			"file_write_time": 130867532927147818,
+			"settings":
+			{
+				"buffer_size": 2779,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "server.js",
 			"settings":
 			{
-				"buffer_size": 1126,
+				"buffer_size": 2136,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/js/page2js.js",
+			"file": "client/js/page4js.js",
 			"settings":
 			{
-				"buffer_size": 11159,
+				"buffer_size": 1915,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/html/page4.html",
+			"file": "client/html/page4.html",
 			"settings":
 			{
-				"buffer_size": 2844,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/andfaulkner/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
-			"settings":
-			{
-				"buffer_size": 583,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "public/js/page3js.js",
-			"settings":
-			{
-				"buffer_size": 7862,
+				"buffer_size": 2669,
 				"line_ending": "Unix"
 			}
 		}
@@ -231,13 +238,21 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
-		"last_filter": "package",
+		"height": 243.0,
+		"last_filter": "install",
 		"selected_items":
 		[
 			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove p",
+				"Package Control: Remove Package"
+			],
+			[
 				"package",
-				"Package Control: Enable Package"
+				"Package Control: Remove Package"
 			],
 			[
 				"disable",
@@ -262,10 +277,6 @@
 			[
 				"jscs",
 				"JSHint: Set Linting Preferences"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"Favorite",
@@ -356,11 +367,11 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 557.0
+		"width": 544.0
 	},
 	"console":
 	{
-		"height": 213.0,
+		"height": 49.0,
 		"history":
 		[
 			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
@@ -380,23 +391,59 @@
 	"expanded_folders":
 	[
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/docs",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/html",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js"
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/.build",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/.build/client",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/.build/client/js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/.build/client/lib/bootstrap",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/client/lib/bootstrap",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/node_modules",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/node_modules/bootstrap",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/node_modules/bootstrap/dist",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/node_modules/bootstrap/dist/js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server"
 	],
 	"file_history":
 	[
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/gulpfile.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/express-backbone-testbed-3.sublime-project",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/node_modules/bootstrap/package.json",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server/middlewares.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/webpack.config.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/gulpfile.html",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/page3js.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/html/page3.html",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server/rest-api.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server/routes/todo-restapi-routes.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/docs/TODO__new_modules.txt",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/tmpl/page4-tmpl.dust",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/html/page4.html",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/config/nodemon.json",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/.build/public/html/page2.html",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/indexjs.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/models.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/.build/public/html/page3.html",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/html/page2.html",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/package.json",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/config/default.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/page4js.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server/debug/winston-logger.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/models/modelData/bears-model-data.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/page2js.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/page5js.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/page6js.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/models/page4js.js",
+		"/home/andfaulkner/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/models/model-builder.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server/debug/uncaught-error-handler.js",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/.jshintrc",
+		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server/winston-logger.js",
+		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/dashboard/dashbaoard-client.js",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/User/Distraction Free.sublime-settings",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/User/HTML.sublime-settings",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/SyntaxHighlightTools/README.rst",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/html/page3.html",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/User/ApplySyntax.sublime-settings",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/html/page4.html",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/docs/todo_other_1.txt",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/gulpfile.js",
-		"/home/andfaulkner/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/express-backbone-testbed-3.sublime-project",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/JSHint Gutter/.jshintrc",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/JSHint Gutter/JSHint.sublime-settings",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
@@ -404,16 +451,10 @@
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/docs/JSHintDirectives.js",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/docs/.jshintrc_old",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/docs/.old_SublimeLinterSettings_withjscs",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/.jshintrc",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/docs/.old_jshintrc",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/index.html",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/indexjs.js",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/html/page2.html",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/docs/JS-Chrome-plugins.txt",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/config/default.js",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server/uncaught-error-handler.js",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server/winston-logger.js",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server.js",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/User/JsFormat.sublime-settings",
 		"/home/andfaulkner/.config/sublime-text-3/Packages/JsFormat/JsFormat.sublime-settings",
@@ -422,13 +463,11 @@
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/collections.js",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/views.js",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/lib/jquery/jquery-2.1.4.js",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/js/models.js",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/publicsrc/js/indexjs.js",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/publicsrc/js",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/lib/bootstrap/ie10-viewport-bug-workaround.js",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/public/lib/bootstrap/starter-template.css",
 		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/server,js",
-		"/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/webpack.config.js",
 		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/dashboard/router-dashboard.js",
 		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/login/router-login.js",
 		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/base.dust",
@@ -492,29 +531,7 @@
 		"/home/andfaulkner/Projects/testbed/express-testbed-2/logs/excessive-data-log.log",
 		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/dashboard/router.js",
 		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/index/router.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/logs/all-logs.log",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/helpers/basicLog.js",
-		"/home/andfaulkner/.config/sublime-text-3/Packages/User/snippets/REGEX--line-containing-item1-not-followed-by-item-2.sublime-snippet",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/install-pkgs.sh",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/require-app.js",
-		"/home/andfaulkner/.config/sublime-text-3/Packages/User/snippets/seneca/seneca--new_action_call.sublime-snippet",
-		"/home/andfaulkner/.config/sublime-text-3/Packages/User/snippets/seneca/seneca--basic-microservice.sublime-snippet",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/test-modules/main.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/load-jquery-noconflict.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/obj-lit-and-setup-fn.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/testaddedjsfile.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/main.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/obj-lit-only.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/asdf.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/bin/redis-server.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/loginScript.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/clientscripts/dashboardScript.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/prelogin.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/base.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/node_modules/require-fu/lib/index.js",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/dashboard/index.dust",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/login/index.dust",
-		"/home/andfaulkner/Projects/testbed/express-testbed-2/app/components/web_components.dust"
+		"/home/andfaulkner/Projects/testbed/express-testbed-2/logs/all-logs.log"
 	],
 	"find":
 	{
@@ -525,6 +542,9 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"<project>,-node_modules/**/*.*",
+			"<project>,-node_modules**",
+			"<project>,-node_modules",
 			"<project>/app",
 			"<project>",
 			"/home/andfaulkner/Projects/testbed/express-testbed-2/app",
@@ -548,6 +568,28 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"public",
+			"/li",
+			"<li>",
+			"watch",
+			"server",
+			"root",
+			"static",
+			"root",
+			"static",
+			"publicStatic",
+			"index",
+			"index.js",
+			"config",
+			"isDone",
+			"toggleTodoItem",
+			"_.each",
+			"todoList",
+			"completed",
+			"reset",
+			".save",
+			"create",
+			"save",
 			"fetch",
 			"jscs",
 			"js",
@@ -653,29 +695,7 @@
 			"opt",
 			"options",
 			"opt",
-			"math",
-			"opt",
-			"options",
-			"sessionId",
-			"hasSession",
-			"redisClient",
-			"hasSession",
-			"function",
-			"serveraddress",
-			"func",
-			"date",
-			"month",
-			"dateOfMonth",
-			"date",
-			"dateOfMonth",
-			"hour",
-			"'/'",
-			"minute",
-			"second",
-			"\"",
-			"loggerTypelabel",
-			"console",
-			"\""
+			"math"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -683,6 +703,9 @@
 		"regex": true,
 		"replace_history":
 		[
+			"client",
+			"/ul",
+			"<ul>",
 			"TodoView",
 			"appView",
 			"todoView",
@@ -739,19 +762,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "server.js",
+					"file": "webpack.config.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1126,
+						"buffer_size": 2779,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								789,
-								789
+								2669,
+								2669
 							]
 						],
 						"settings":
@@ -760,26 +783,21 @@
 							"apply_syntax_touched": true,
 							"bh_regions":
 							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
@@ -790,26 +808,31 @@
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -817,37 +840,36 @@
 								"bh_regex_content"
 							],
 							"side_bar_folders_auto_load_folder": 1,
-							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 884.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 1,
-					"file": "public/js/page2js.js",
+					"file": "server.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11159,
+						"buffer_size": 2136,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9585,
-								9585
+								1618,
+								1618
 							]
 						],
 						"settings":
@@ -856,26 +878,21 @@
 							"apply_syntax_touched": true,
 							"bh_regions":
 							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
@@ -886,59 +903,62 @@
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content"
 							],
-							"open_with_edit": true,
 							"side_bar_folders_auto_load_folder": 1,
-							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3131.0,
+						"translation.y": 351.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "public/html/page4.html",
+					"file": "client/js/page4js.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2844,
+						"buffer_size": 1915,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								449,
-								449
+								44,
+								44
 							]
 						],
 						"settings":
@@ -947,26 +967,21 @@
 							"apply_syntax_touched": true,
 							"bh_regions":
 							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
@@ -977,120 +992,31 @@
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
-							],
-							"rulers":
-							[
-								100
-							],
-							"side_bar_folders_auto_load_folder": 1,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"word_wrap": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 390.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/andfaulkner/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 583,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								285,
-								285
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"apply_syntax_touched": true,
-							"bh_regions":
-							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -1098,13 +1024,13 @@
 								"bh_regex_content"
 							],
 							"side_bar_folders_auto_load_folder": 1,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1119,20 +1045,20 @@
 			"sheets":
 			[
 				{
-					"buffer": 4,
-					"file": "public/js/page3js.js",
+					"buffer": 3,
+					"file": "client/html/page4.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7862,
+						"buffer_size": 2669,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								529,
-								529
+								2609,
+								2609
 							]
 						],
 						"settings":
@@ -1141,26 +1067,21 @@
 							"apply_syntax_touched": true,
 							"bh_regions":
 							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
@@ -1171,42 +1092,45 @@
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content"
 							],
-							"open_with_edit": true,
 							"side_bar_folders_auto_load_folder": 1,
-							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 743.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1252,13 +1176,13 @@
 		"cols":
 		[
 			0.0,
-			0.271495008784,
+			0.373221438523,
 			1.0
 		],
 		"rows":
 		[
 			0.0,
-			0.541489361702,
+			0.479187124932,
 			1.0
 		]
 	},
@@ -1309,7 +1233,7 @@
 		],
 		"width": 570.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},
@@ -1317,7 +1241,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 172.0,
+	"side_bar_width": 243.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
