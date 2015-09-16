@@ -11,7 +11,8 @@ module.exports = (function uncaughtErrorHandler(){
     //at the bottom, and the full stacktrace displayed above.
     process.on('uncaughtException', function onUncaughtException (err) {
         console.log('\n' + '_'.times(100) + '\n' + '_'.times(100));
-        console.log('________________UNCAUGHT EXCEPTION________________'.red.bgBlack.bold.underline);
+        console.log('________________UNCAUGHT EXCEPTION________________'
+            .red.bgBlack.bold.underline);
 
         console.log('FULL STACKTRACE:'.magenta.bold);
         log.error(err.stack);
@@ -24,7 +25,7 @@ module.exports = (function uncaughtErrorHandler(){
 
         var splitStack = (err.stack).split('\n    ');
 
-        var mainArg = _.filter(splitStack, function(str) {
+        var mainArg = _.filter(splitStack, function createMainOutput(str) {
             return str.contains(config.appName) && !str.contains('node_modules');
         }).join('\n');
 

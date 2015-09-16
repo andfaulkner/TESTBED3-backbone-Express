@@ -12,5 +12,7 @@ module.exports = (function page4jsReactStuff_Module(){
         }
     });
 
+    // React.render(<App />);
+
     return 'win!';
 }());

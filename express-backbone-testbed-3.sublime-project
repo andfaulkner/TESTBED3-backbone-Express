@@ -20,30 +20,30 @@
             "gutter_theme_excludes": [],
             "lint_mode": "load/save",
             "linters": {
-                "annotations": {
-                    "@disable": true,
-                    "args": [],
-                    "errors": [
-                        "FIXME"
-                    ],
-                    "excludes": [],
-                    "warnings": [
-                        "TODO",
-                        "README",
-                        "HACK",
-                        "WARNING"
-                    ]
-                },
+                // "annotations": {
+                //     "@disable": true,
+                //     "args": [],
+                //     "errors": [
+                //         "FIXME"
+                //     ],
+                //     "excludes": [],
+                //     "warnings": [
+                //         "TODO",
+                //         "README",
+                //         "HACK",
+                //         "WARNING"
+                //     ]
+                // },
                 "eslint": {
                     "@disable": false,
                     "args": [],
                     "excludes": []
-                },
-                "json": {
-                    "@disable": false,
-                    "args": [],
-                    "excludes": [],
-                    "strict": true
+                // },
+                // "json": {
+                //     "@disable": false,
+                //     "args": [],
+                //     "excludes": [],
+                //     "strict": true
                 }
             },
             "mark_style": "fill",

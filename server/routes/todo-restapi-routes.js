@@ -8,11 +8,11 @@ var restRouter = express.Router();
 //**************************** RESTAPI ROUTES ****************************//
 restRouter
     .get('/', function restRouter_base_get(req, res){
-        res.json({apiAccessed: true, protocol: "GET", msg: 'welcome to our api!'});
+        res.json({apiAccessed: true, protocol: 'GET', msg: 'welcome to our api!'});
         res.end();
     })
     .post('/', function restRouter_base_post(req, res){
-        res.json({apiAccessed: true, protocol: "POST", msg: 'welcome to our api!'});
+        res.json({apiAccessed: true, protocol: 'POST', msg: 'welcome to our api!'});
         res.end();
     });
 
@@ -24,8 +24,8 @@ restRouter
     // });
 
 restRouter
-    .post('/bears', function(req, res){
-        res.json({apiAccessed: true, protocol: "POST", msg: 'welcome to our api - 2!'});
+    .post('/bears', function restAPIRouteBears(req, res){
+        res.json({apiAccessed: true, protocol: 'POST', msg: 'welcome to our api - 2!'});
         res.end();
     });
 //************************************************************************//

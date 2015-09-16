@@ -21,12 +21,12 @@ var glob = require('glob');
 // require('dustjs-linkedin/dist/dust-core');
 // var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var entryPts = (function(){
+var entryPts = (function entryPts(){
     var retObj = { };
     console.time('entryPts');
     var files = _.map(glob.sync('./client/js/+(page*|index*).js'),
                       (file) => _.rest(file.split('/')).join('/'));
-    _.each(files, function(file){ retObj[file] = './' + file; });
+    _.each(files, (file) => retObj[file] = './' + file);
     console.timeEnd('entryPts');
     return retObj;
 }());
@@ -53,7 +53,16 @@ module.exports = {
     'module': {
         loaders: [
             // { test: /\.es6.js$/, loader: 'babel-loader' }
-            { test: /\.jsx$/, loader: 'babel-loader' }
+            {
+                test: /\.js[x]$/,
+                loader: 'babel',
+                exclude: /(node_modules|bower_components|\.build)/,
+                query: {
+                    cacheDirectory: path.join(__dirname, '.buildcache'),
+                    optional: ['runtime'],
+                    nonStandard: true //allows jsx
+                }
+            }
         ]
     },
 
