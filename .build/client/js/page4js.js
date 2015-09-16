@@ -25200,19 +25200,230 @@
 	    var App = _react2['default'].createClass({
 	        displayName: 'App',
 
+	        getInitialState: function App_getInitialState() {
+	            return {
+	                txt: 'the state txt',
+	                id: 0
+	            };
+	        },
+
+	        update: function App_update(e) {
+	            this.setState({ txt: e.target.value });
+	        },
+
+	        getDefaultProps: function App_getDefaultProps() {
+	            return {
+	                txt: 'DEFAULT TEXT',
+	                cat: 5
+	            };
+	        },
+	        propTypes: {
+	            txt: _react2['default'].PropTypes.string,
+	            cat: _react2['default'].PropTypes.number.isRequired
+	        },
 	        render: function App_render() {
+	            // var txt = this.props.txt;
+	            var cat = this.props.cat;
 	            return _react2['default'].createElement(
-	                'h1',
+	                'div',
 	                null,
-	                'Hello World'
+	                _react2['default'].createElement('input', { type: 'text', onChange: this.update }),
+	                _react2['default'].createElement(
+	                    'h1',
+	                    null,
+	                    'Hello World'
+	                ),
+	                _react2['default'].createElement(
+	                    'h2',
+	                    null,
+	                    this.state.txt
+	                ),
+	                _react2['default'].createElement(
+	                    'span',
+	                    null,
+	                    cat
+	                )
 	            );
 	        }
 	    });
 
-	    // React.render(<App />);
-
-	    return 'win!';
+	    _react2['default'].render(_react2['default'].createElement(App, { txt: 'yay!', cat: 7 }), document.getElementById('react-component-1'));
 	})();
+
+	var AppTwo = _react2['default'].createClass({
+	    displayName: 'AppTwo',
+
+	    // getDefaultProps: function(){
+	    //     return {
+	    //         age: 42,
+	    //         name: 'gr'
+	    //     };
+	    // },
+	    propTypes: {
+	        age: _react2['default'].PropTypes.number,
+	        name: _react2['default'].PropTypes.string
+	    },
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            age: 500,
+	            name: 'POOO'
+	        };
+	    },
+
+	    update: function update(e) {
+	        return this.setState({
+	            age: e.target.value,
+	            name: e.target.value
+	        });
+	    },
+
+	    render: function render() {
+	        return _react2['default'].createElement(
+	            'div',
+	            { className: 'AppTwo' },
+	            _react2['default'].createElement('input', { type: 'text', onChange: this.update }),
+	            _react2['default'].createElement('br', null),
+	            _react2['default'].createElement('input', { type: 'text', onChange: this.update }),
+	            ' ',
+	            _react2['default'].createElement('br', null),
+	            _react2['default'].createElement(
+	                'span',
+	                null,
+	                'Your name is ',
+	                this.state.name
+	            ),
+	            _react2['default'].createElement('br', null),
+	            _react2['default'].createElement(
+	                'span',
+	                null,
+	                'Your age is currently ',
+	                this.state.age
+	            )
+	        );
+	    }
+	});
+
+	_react2['default'].render(_react2['default'].createElement(AppTwo, { age: '20' }), document.getElementById('react-component-2'));
+
+	//**************************** COMPONENT SET 2 ****************************//
+	var CaseBox = _react2['default'].createClass({
+	    displayName: 'CaseBox',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            caseNum: 999,
+	            caseName: 'Default',
+	            caseType: 'Bears'
+	        };
+	    },
+
+	    update: function update(e) {
+	        return this.setState({
+	            caseNum: this.refs.caseNum.refs.inp.getDOMNode().value,
+	            caseName: this.refs.caseName.refs.inp.getDOMNode().value,
+	            caseType: this.refs.caseType.refs.drop.getDOMNode().value
+	        });
+	    },
+
+	    render: function render() {
+	        return _react2['default'].createElement(
+	            'div',
+	            { className: 'CaseBox' },
+	            _react2['default'].createElement(TextInputter, { ref: 'caseNum', inputTitle: 'Case Number', update: this.update }),
+	            _react2['default'].createElement(TextInputter, { ref: 'caseName', inputTitle: 'Case Name', update: this.update }),
+	            _react2['default'].createElement(DropdownInputter, { ref: 'caseType', inputIdent: 'caseType', inputTitle: 'Case Type',
+	                update: this.update }),
+	            _react2['default'].createElement(
+	                'span',
+	                null,
+	                'Case ',
+	                this.state.caseName,
+	                ', of type ',
+	                this.state.caseType,
+	                ' has a case # of ',
+	                this.state.caseNum
+	            )
+	        );
+	    }
+	});
+
+	/**
+	 * [render description]
+	 * @param  {String} ) {                   return (            <div className [description]
+	 * @return {[type]}   [description]
+	 */
+	var TextInputter = _react2['default'].createClass({
+	    displayName: 'TextInputter',
+
+	    render: function render() {
+	        return _react2['default'].createElement(
+	            'div',
+	            { className: 'TextInputter' },
+	            _react2['default'].createElement(
+	                'h2',
+	                null,
+	                this.props.inputTitle
+	            ),
+	            _react2['default'].createElement('input', { ref: 'inp', type: 'text', onChange: this.props.update }),
+	            _react2['default'].createElement('br', null)
+	        );
+	    }
+	});
+
+	/**
+	 * [render description]
+	 * @param  {String} ) {                   return (            <div className [description]
+	 * @return {[type]}   [description]
+	 */
+	var DropdownInputter = _react2['default'].createClass({
+	    displayName: 'DropdownInputter',
+
+	    propTypes: {
+	        inputIdent: _react2['default'].PropTypes.string,
+	        inputTitle: _react2['default'].PropTypes.string
+	    },
+	    render: function render() {
+	        return _react2['default'].createElement(
+	            'div',
+	            { className: 'DropdownInputter' },
+	            _react2['default'].createElement(
+	                'h2',
+	                null,
+	                this.props.inputTitle
+	            ),
+	            _react2['default'].createElement(
+	                'select',
+	                { ref: 'drop', name: '{this.props.inputIdent}',
+	                    id: '{this.props.inputIdent}Dropdown', onChange: this.props.update },
+	                _react2['default'].createElement(
+	                    'option',
+	                    { value: 'Fraud' },
+	                    'Fraud'
+	                ),
+	                _react2['default'].createElement(
+	                    'option',
+	                    { value: 'Theft', selected: true },
+	                    'Theft'
+	                ),
+	                _react2['default'].createElement(
+	                    'option',
+	                    { value: 'Espionage' },
+	                    'Espionage'
+	                ),
+	                _react2['default'].createElement(
+	                    'option',
+	                    { value: 'Bears' },
+	                    'Bears'
+	                )
+	            )
+	        );
+	    }
+	});
+
+	//*************************************************************************//
+
+	_react2['default'].render(_react2['default'].createElement(CaseBox, null), document.getElementById('react-component-3'));
 
 /***/ },
 /* 8 */

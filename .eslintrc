@@ -35,7 +35,7 @@
     "no-delete-var": 2,
     "no-label-var": 2,
     "no-use-before-define": 2,
-    "func-names": 1,
+    "func-names": 0,
     "indent": [1, 4],
     "no-array-constructor": 2,
     "no-lonely-if": 2,
