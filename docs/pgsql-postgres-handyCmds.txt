@@ -1,0 +1,14 @@
+# EXAMPLE POSTGRES INITIALIZATION::
+# sudo -u postgres psql postgres
+#       -- creates a local db with user postgres
+# "initdb --pgdata=/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/dbstore --username=postgres
+#       or try...
+#               "initdb --pgdata=/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/dbstore --use
+# postgres --coordinator -D /home/andfaulkner/Projects/testbed/express-backbone-testbed-3/dbstore
+### kill a db running in /home/andfaulkner/Projects/testbed/express-backbone-testbed-3/dbstore/
+
+# example:
+# PGDATA=/home/andfaulkner/Projects/testbed/express-backbone-testbed-3/dbstore/ pg_ctl stop
+
+# open the db, named postgres, with user postgres
+sudo -u postgres psql postgres
