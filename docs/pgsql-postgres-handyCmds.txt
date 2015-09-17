@@ -12,3 +12,12 @@
 
 # open the db, named postgres, with user postgres
 sudo -u postgres psql postgres
+
+# it all starts with...
+    pg_ctl
+# AND
+    postmaster
+# AND
+    psql
+# AND
+    postgres
