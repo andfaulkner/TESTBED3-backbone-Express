@@ -1,3 +1,31 @@
+GENERATE UML FOR NODEJS
+npm install wavi -g
+
+_________________________________________________________________
+** pub-sub for postgres module:
+pg-pubsub module: https://www.npmjs.com/package/pg-pubsub
+_________________________________________________________________
+
+__________________________________________________________________________
+ pgcli
+-- makes it easier to play with postgres
+    -- SQL autocompletes!
+    -- syntax highlighting!
+- repo: https://github.com/dbcli/pgcli
+- site: http://pgcli.com/
+-- to install:
+    brew install pgcli
+...then...
+    pgcli postgres
+    pgcli isight
+    pgcli isight_audit
+    pgcli template1
+    pgcli postgres://postgres:postgres@localhost:5432/postgres
+    pgcli postgres://postgres:postgres@localhost:5432/isight
+    pgcli postgres://postgres:postgres@localhost:5432/isight_audit
+    pgcli postgres://postgres:postgres@localhost:5432/template1
+____________________________________________________________________________
+
 GET THIS INTO BASHRC!:
 alias murdernode='ps aux | grep "gulp\|node\|npm" | cut -d" " -f2 | sudo xargs kill -9'
 

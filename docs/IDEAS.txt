@@ -1,0 +1,91 @@
+--- why the 'serial' module? Async would handle it better, and with greater clarity
+
+--- Seneca services in separate processes
+        -- ...with the services launched concurrently rather than synchronously as they are now, with communication between them (i.e. coupling/hard dependency creation) kicked off only when all concurrently launched service-launching functions return
+            -- aka what async.parallel is amazing at
+        -- Why?
+            - massively accelerate start times (this is some serious event loop blocking)
+            - allow single-component restarts when code changes, rather than full restarts of all services and the core server
+--- related: kill that entire bootstrapper segment in server.js. Its behaviour is confusing, the way it gets it produces synchronous execution very strange (especially when the not-so-well-maintained SerialRunner enters the mix) and may not be safe given how much it passes into Seneca, which is weird black-magic-tastic.
+    - IMHO there's about a 10% chance it contributes to slow startup
+_______________________________________________________________________________________________
+
+_______________________________________________________________________________________________
+--- hotswapping modules
+    - no enterprise-scale node server is maintainable without it
+    - ...and it sucks total ass developing on even medium-scale node servers with no hotswapping
+    - why? 1 second turnaround on most individual code saves, vs 20 second.
+        - considering quantity alone, this quickly adds up to a lot of wasted time
+            - greater "lost train of thought" time (no one is immune - e.g. everyone 'microsleeps')
+            - harmful change in how the team works with Node
+                - less creative, and more willingness to leave quick, hard-to-maintain solutions in place
+                - slower builds = more caution about saving, more willingness to leave things that 'just work', less architecture overall, higher rate of technical debt buildup
+                - since JS has no static typing (& thus poor IDE-level error detection past the basic syntax level), having builds rather than a repl environment is an especially big productivity drain; you end up wasting loads of time carefully checking the code before each save, or running a large # of failed builds.
+            - losing the repl-like environment === taking all the fun & productivity out of NodeJS
+                - (definitely part of why configuring new products takes so long)
+        - significantly easier application of patches on production servers
+            - expedite fixes = interacting with a running server process rather than redeploying etc.
+
+--- related: adding frontend livereloads + separating them from server resets
+    - i.e. saving view-only code requiring no compilation = livereload triggered; saving backend code = nodemon triggered (I've tried this and it's awesome)
+
+_______________________________________________________________
+- Minor point: some outdated code in lib/services/db.js:
+    if(process.env.MONGO) {
+        store = 'mongo-store';
+    }
+_______________________________________________________________
+
+
+
+--- use of redis as postgres intermediary, with all db data cached in redis for ultra rapid access and availability. I.e.:
+    ___________                                        _________________
+    |          |===[caches entire contents in]========>|               |
+    | POSTGRES |                                       |     REDIS     |
+    |__________|<==[lazily syncs back to postgres]=====|_______________|
+                                                          /\        ||
+                                                          ||        ||
+                                                          ||        ||
+                                                          ||        ||
+                                          [instantly updates]      [data changes from e.g.]
+                                          [  redis when data]      [other users pushed    ]
+                                          [  changes in view]      [to view (socket.io?)  ]
+                                                          ||        ||
+                                                          ||        ||
+                                                          ||        ||
+                                                     _____||________||_____
+                                                     |                    |
+                                                     |      FRONTEND      |
+                                                     |____________________|
+        - why?:
+            ** speed for users: redis is crazy, crazy fast
+                - fast enough to be a chat intermediary: http://www.rediscookbook.org/pubsub_for_asynchronous_communication.html
+                - repeated db hits becomes a smaller issue (low priority AJAX-pushed hits = low overhead)
+            ** much faster development time - cache like high-availability data store = can immediately view data model changes (i.e. the piles of JSON files). No full db rebuild, server restart, & frontend rebuild req to test. Mass data insert mode also exists: http://redis.io/topics/mass-insert
+                - potentially something in the realm of 2min-->5s for the db "populating" phase of the build.
+                    - important - this part really eats up dev time
+            * lesser reasons/points/checks on possible pitfalls/gaps it can fill:
+                - autocompletion. May aid in removal of ElasticSearch - rapid asynchronous hits against redis can be used to figure out potential completions.
+                    - this is of questionable feasibility with postgres
+                - turns out it has a few essentials of concern (i.e. key things Mongo lacked) e.g.
+                    - good data safety if persistence methods used: http://redis.io/topics/persistence
+                    - atomic transactions: http://redis.io/topics/transactions
+                    - actually quite powerful: http://redis.io/commands
+
+        - caveat: perhaps this is all possible with just postgres? (although speed seems a likely blocker)
+            - pg-pubsub module: https://www.npmjs.com/package/pg-pubsub
+
+        - redis<-->frontend likely doable with these:
+                --- https://github.com/louischatriot/node-redis-pubsub
+                --- https://github.com/socketio/socket.io-redis
+                - and this command / set of commands:
+                    http://redis.io/commands/pubsub
+                    http://redis.io/topics/pubsub
+        - potentially useful: message processing queue for redis:
+            https://github.com/runk/redisq
+-------------------------------------------------------------------------------
+
+--- terminal-level seneca output filtering scripts
+    --- even as simple as greps, awks, seds, revs, cuts, and regexes - as it stands that shit is useless
+
+---

@@ -143,8 +143,7 @@ var TextInputter = React.createClass({
 
 /**
  * [render description]
- * @param  {String} ) {                   return (            <div className [description]
- * @return {[type]}   [description]
+ * @return {ReactComponent} A react component for a dropdown menu
  */
 var DropdownInputter = React.createClass({
     propTypes: {
@@ -158,9 +157,9 @@ var DropdownInputter = React.createClass({
                 <select ref="drop" name="{this.props.inputIdent}"
                         id="{this.props.inputIdent}Dropdown" onChange={this.props.update}>
                     <option value="Fraud">Fraud</option>
-                    <option value="Theft" selected>Theft</option>
+                    <option value="Theft">Theft</option>
                     <option value="Espionage">Espionage</option>
-                    <option value="Bears">Bears</option>
+                    <option value="Bears" selected>Bears</option>
                 </select>
             </div>
         );

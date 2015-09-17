@@ -25373,8 +25373,7 @@
 
 	/**
 	 * [render description]
-	 * @param  {String} ) {                   return (            <div className [description]
-	 * @return {[type]}   [description]
+	 * @return {ReactComponent} A react component for a dropdown menu
 	 */
 	var DropdownInputter = _react2['default'].createClass({
 	    displayName: 'DropdownInputter',
@@ -25403,7 +25402,7 @@
 	                ),
 	                _react2['default'].createElement(
 	                    'option',
-	                    { value: 'Theft', selected: true },
+	                    { value: 'Theft' },
 	                    'Theft'
 	                ),
 	                _react2['default'].createElement(
@@ -25413,7 +25412,7 @@
 	                ),
 	                _react2['default'].createElement(
 	                    'option',
-	                    { value: 'Bears' },
+	                    { value: 'Bears', selected: true },
 	                    'Bears'
 	                )
 	            )
