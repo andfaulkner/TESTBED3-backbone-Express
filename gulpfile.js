@@ -278,9 +278,9 @@ gulp.task('server', function livereloadServer(){
         .pipe(p.nodemon({
             script: 'server.js',
             ext: 'js, html, css, scss, json, less, ico',
-            watch: ['./server', './config', './server.js'],
+            watch: ['./server', './config', 'server.js'],
             execMap: {
-                'js': 'node --harmony --harmony_scoping --harmony_modules --stack-trace-limit=1000'
+                'js': 'node --harmony --harmony_modules --stack-trace-limit=1000'
             }
         })
         .on('restart', function restartServerOnNodemonReset(){

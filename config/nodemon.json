@@ -3,7 +3,7 @@
     "verbose": true,
     "script": "server.js",
     "execMap": {
-        "js": "node --harmony --harmony_scoping --harmony_modules --stack-trace-limit=1000"
+        "js": "node --harmony --harmony_modules --stack-trace-limit=1000"
     },
     "watch": [
         "./server",

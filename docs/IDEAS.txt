@@ -96,4 +96,9 @@ _______________________________________________________________
         -- https://github.com/rackt/react-router
         -- https://github.com/erikras/redux-form    <<--- no lost form data :)
 
+-----------------------------------------------------------------------------------------
+--- performance etc. logging
+    --- e.g. gc-profiler   -   https://github.com/danielkhan/node-gc-profiler
+
+
 --- nvm - the build environment really wants the newest Node, whereas the app wants an older version (?)
