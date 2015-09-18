@@ -2,6 +2,16 @@ GENERATE UML FOR NODEJS
 npm install wavi -g
 
 _________________________________________________________________
+REDUX - FOR REACT - LIKE FLUX BUT SUPER-MINIMAL
+        -- https://github.com/rackt/redux
+        -- https://github.com/rackt/react-redux
+        -- https://github.com/gaearon/redux-devtools
+        -- https://github.com/rackt/react-router
+        -- https://github.com/erikras/redux-form    <<--- no lost form data :)
+
+_________________________________________________________________
+
+_________________________________________________________________
 ** pub-sub for postgres module:
 pg-pubsub module: https://www.npmjs.com/package/pg-pubsub
 _________________________________________________________________

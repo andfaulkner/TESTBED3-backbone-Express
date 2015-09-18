@@ -1,7 +1,7 @@
 //Fix root path referenced by require
 require('rootpath')();
-require('clarify');
 require('trace');
+require('clarify');
 require('colors');
 
 var gulp = require('gulp');
@@ -20,8 +20,11 @@ var path    = require('path'),
 require('shelljs/global');
 
 //ECMA 6 POLYFILL
-require('babel/register');
-Object.getPrototypeOf.toString = (() => (Object.toString()));
+//require('babel');
+//require('babel/register');
+//Object.getPrototypeOf.toString = function() {
+//    return Object.toString();
+//};
 
 //var nodemonConfig = require('config/nodemon.json');
 
@@ -131,7 +134,7 @@ var onError = function onError(err) {
 };
 
 var fileExists = function fileExists(filePath, callback){
-    fs.stat(filePath, (err, stats) => {
+    fs.stat(filePath, function(err, stats) {
         if (err) return callback(false);
         return callback(stats.isFile());
     });
@@ -181,9 +184,11 @@ var handlePortCheckResult = function handlePortCheckResult(inUse) {
         if (err) return console.error(err);
         var pidBlockingPort =
             _.first(_(stdout)
-                .thru((outstr) => outstr
-                    .replace('\n', ' ')
-                    .split(' '))
+                .thru(function(outstr){
+                    return outstr
+                        .replace('\n', ' ')
+                        .split(' ');
+                })
                 .compact()
                 .last()
                 .split('/'));
@@ -250,15 +255,17 @@ var rmDebugCode = lazypipe()
 //################################################################################
 //#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LIST ALL GULP TASKS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //################################################################################
-gulp.task('get-tasks', () =>
-    (process.nextTick(() => {
+gulp.task('get-tasks', function() {
+    return process.nextTick(function() {
         console.log('\n_________ALL REGISTERED GULP TASKS_________');
-        Object.keys(gulp.tasks).forEach((t) =>
-            ((t === 'install' || t === 'uninstall')
-                ? null
-                : console.log('-- ' + t.bgBlack.green)));
+        Object.keys(gulp.tasks).forEach(function(t) {
+              return (t === 'install' || t === 'uninstall')
+                        ? null
+                        : console.log('-- ' + t.bgBlack.green)
+        });
         console.log('___________________________________________\n');
-    })));
+    })
+});
 //#################################################################################
 
 
@@ -271,7 +278,7 @@ gulp.task('server', function livereloadServer(){
         .pipe(p.nodemon({
             script: 'server.js',
             ext: 'js, html, css, scss, json, less, ico',
-            watch: ['./server', './config', 'server.js'],
+            watch: ['./server', './config', './server.js'],
             execMap: {
                 'js': 'node --harmony --harmony_scoping --harmony_modules --stack-trace-limit=1000'
             }
@@ -279,7 +286,7 @@ gulp.task('server', function livereloadServer(){
         .on('restart', function restartServerOnNodemonReset(){
             return gulp.src('server')   // when the app restarts, run livereload.
                 .pipe(consoleTaskReport())
-                .pipe(p.tap(() => {
+                .pipe(p.tap(function() {
                     console.log('\n' + gutil.colors.white.bold.bgGreen('\n' +
                     '     .......... RELOADING PAGE, PLEASE WAIT ..........\n'));
                 }))
@@ -304,7 +311,7 @@ gulp.task('webpack', function webpackTask() {
 gulp.task('dust', function dustTask(){
     return gulp.src(SRC.tpl)
         .pipe(p.dust({
-            name: (file) => {
+            name: function(file)  {
                 var basename = path.basename(file.relative);
                 return basename.substring(0, basename.lastIndexOf('.'));
             }
@@ -339,14 +346,14 @@ gulp.task('reload', function reloadTask() {
 //################################################################################
 
 //gulp.task('build', ['copy-static', 'dust', 'webpack']);
-gulp.task('build', () => runSequence(['copy-static', 'webpack'], 'reload'));
+gulp.task('build', function(){ return runSequence(['copy-static', 'webpack'], 'reload'); });
 
 /**
  * Checks if the livereload port is in use. Finds the process tying it up if so, & kills it.
  * Relaunches livereload server if true
  * @return {[type]}       [description]
  */
-gulp.task('default', ['build'], () => initLivereloadWatchSetup());
+gulp.task('default', ['build'], function(){ return  initLivereloadWatchSetup(); });
 
 
 // gulp.task('olddefault', () => runSequence('build', 'watch') ); //task watch now = task default

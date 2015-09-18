@@ -1,11 +1,15 @@
 console.time('webpack config entirety');
-require('harmonize')(); // ensure es6 works
+//require('harmonize')(); // ensure es6 works
 
 //Fix root path referenced by require
 require('rootpath')();
 
-require('babel/register');
-Object.getPrototypeOf.toString = (() => (Object.toString()));
+// require('babel');
+
+// require('babel/register');
+Object.getPrototypeOf.toString = function() {
+    return Object.toString();
+};
 
 /**
  * Webpack configuration for module handling
@@ -25,8 +29,10 @@ var entryPts = (function entryPts(){
     var retObj = { };
     console.time('entryPts');
     var files = _.map(glob.sync('./client/js/+(page*|index*).js'),
-                      (file) => _.rest(file.split('/')).join('/'));
-    _.each(files, (file) => retObj[file] = './' + file);
+                      function(file) { return _.rest(file.split('/')).join('/'); });
+    _.each(files, function(file){
+        retObj[file] = './' + file;
+    });
     console.timeEnd('entryPts');
     return retObj;
 }());
