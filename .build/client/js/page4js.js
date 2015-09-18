@@ -25197,6 +25197,160 @@
 
 	    console.log('in react stuff!');
 
+	    /**
+	     * Spaces sections of test page out, adds long makeshift line as separater
+	     */
+	    var Spacer = _react2['default'].createClass({
+	        displayName: 'Spacer',
+
+	        render: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                null,
+	                _react2['default'].createElement('br', null),
+	                '-----------------------------------------------------------------------------',
+	                _react2['default'].createElement('br', null),
+	                _react2['default'].createElement('br', null)
+	            );
+	        }
+	    });
+
+	    _react2['default'].render(_react2['default'].createElement(Spacer, null), document.getElementById('cutoff-betw-bb-and-react-views'));
+
+	    //**************************** COMPONENT SET 5 ****************************//
+	    var ButtonFive = _react2['default'].createClass({
+	        displayName: 'ButtonFive',
+
+	        getInitialState: function getInitialState() {
+	            return { val: 0 };
+	        },
+	        update: function update(e) {
+	            console.log('BF - update');
+	            this.setState({ val: this.state.val + 1 });
+	        },
+	        componentWillMount: function componentWillMount() {
+	            console.log('BF - mounting');
+	        },
+	        render: function render() {
+	            console.log('BF - rendering');
+	            return _react2['default'].createElement(
+	                'button',
+	                { onClick: this.update },
+	                this.state.val
+	            );
+	        },
+
+	        componentDidMount: function componentDidMount() {
+	            console.log('BF - mounted - componentDidMount');
+	        },
+	        componentWillUnmount: function componentWillUnmount() {
+	            console.log('BF - unmounted! Byebye!');
+	        }
+	    });
+
+	    var AppFive = _react2['default'].createClass({
+	        displayName: 'AppFive',
+
+	        mountEl: function mountEl() {
+	            console.log('AppFive - mounted - mount function');
+	            _react2['default'].render(_react2['default'].createElement(ButtonFive, null), document.getElementById('app-five'));
+	        },
+	        unmountEl: function unmountEl() {
+	            console.log('AppFive - unmounted - unmount function');
+	            _react2['default'].unmountComponentAtNode(document.getElementById('app-five'));
+	        },
+	        render: function render() {
+	            console.log('AF - render');
+	            console.log(this.mountEl);
+	            console.log(this.unmountEl);
+	            return _react2['default'].createElement(
+	                'div',
+	                null,
+	                _react2['default'].createElement(
+	                    'button',
+	                    { onClick: this.mountEl },
+	                    'Mount'
+	                ),
+	                _react2['default'].createElement(
+	                    'button',
+	                    { onClick: this.unmountEl },
+	                    'Unmount'
+	                ),
+	                _react2['default'].createElement('div', { id: 'app-five' }),
+	                _react2['default'].createElement(Spacer, null)
+	            );
+	        }
+	    });
+
+	    _react2['default'].render(_react2['default'].createElement(AppFive, null), document.getElementById('react-component-5'));
+
+	    //*************************************************************************//
+
+	    //**************************** COMPONENT SET 4 ****************************//
+	    // <AppThree>
+	    //   |--> <ButtonTwo>
+	    //          |--> <Heart>
+
+	    var AppThree = _react2['default'].createClass({
+	        displayName: 'AppThree',
+
+	        render: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                { className: 'AppThree' },
+	                _react2['default'].createElement(Spacer, null),
+	                _react2['default'].createElement(
+	                    ButtonTwo,
+	                    null,
+	                    _react2['default'].createElement(Heart, null)
+	                ),
+	                _react2['default'].createElement(Spacer, null)
+	            );
+	        }
+	    });
+
+	    var ButtonTwo = _react2['default'].createClass({
+	        displayName: 'ButtonTwo',
+
+	        render: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                { className: 'ButtonTwo' },
+	                ' I ',
+	                this.props.children,
+	                ' eating babies'
+	            );
+	        }
+	    });
+
+	    var Heart = _react2['default'].createClass({
+	        displayName: 'Heart',
+
+	        render: function render() {
+	            return _react2['default'].createElement(
+	                'span',
+	                { className: 'Heart', className: 'heart' },
+	                _react2['default'].createElement(
+	                    'b',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'u',
+	                        null,
+	                        'love'
+	                    )
+	                )
+	            );
+	        }
+	    });
+
+	    _react2['default'].render(_react2['default'].createElement(AppThree, null), document.getElementById('react-component-4'));
+
+	    //*************************************************************************//
+
+	    //**************************** COMPONENT SET 1 ****************************//
+	    // <App>
+	    // <AppTwo>
+
 	    var App = _react2['default'].createClass({
 	        displayName: 'App',
 
@@ -25226,7 +25380,8 @@
 	            var cat = this.props.cat;
 	            return _react2['default'].createElement(
 	                'div',
-	                null,
+	                { className: 'App' },
+	                _react2['default'].createElement(Spacer, null),
 	                _react2['default'].createElement('input', { type: 'text', onChange: this.update }),
 	                _react2['default'].createElement(
 	                    'h1',
@@ -25241,8 +25396,13 @@
 	                _react2['default'].createElement(
 	                    'span',
 	                    null,
-	                    cat
-	                )
+	                    _react2['default'].createElement(
+	                        'b',
+	                        null,
+	                        cat
+	                    )
+	                ),
+	                _react2['default'].createElement(Spacer, null)
 	            );
 	        }
 	    });
@@ -25253,12 +25413,6 @@
 	var AppTwo = _react2['default'].createClass({
 	    displayName: 'AppTwo',
 
-	    // getDefaultProps: function(){
-	    //     return {
-	    //         age: 42,
-	    //         name: 'gr'
-	    //     };
-	    // },
 	    propTypes: {
 	        age: _react2['default'].PropTypes.number,
 	        name: _react2['default'].PropTypes.string
@@ -25304,17 +25458,21 @@
 	    }
 	});
 
-	_react2['default'].render(_react2['default'].createElement(AppTwo, { age: '20' }), document.getElementById('react-component-2'));
+	_react2['default'].render(_react2['default'].createElement(AppTwo, { age: 20 }), document.getElementById('react-component-2'));
 
 	//**************************** COMPONENT SET 2 ****************************//
+	//<CaseBox>
+	//  |--> <TextInputter>
+	//  |--> <DropdownInputter>
+
 	var CaseBox = _react2['default'].createClass({
 	    displayName: 'CaseBox',
 
 	    getInitialState: function getInitialState() {
 	        return {
 	            caseNum: 999,
-	            caseName: 'Default',
-	            caseType: 'Bears'
+	            caseName: 'default',
+	            caseType: 'bears'
 	        };
 	    },
 
@@ -25382,6 +25540,7 @@
 	        inputIdent: _react2['default'].PropTypes.string,
 	        inputTitle: _react2['default'].PropTypes.string
 	    },
+
 	    render: function render() {
 	        return _react2['default'].createElement(
 	            'div',
@@ -25393,27 +25552,27 @@
 	            ),
 	            _react2['default'].createElement(
 	                'select',
-	                { ref: 'drop', name: '{this.props.inputIdent}',
-	                    id: '{this.props.inputIdent}Dropdown', onChange: this.props.update },
+	                { ref: 'drop', name: this.props.inputIdent, defaultValue: 'theft',
+	                    id: this.props.inputIdent + 'Dropdown', onChange: this.props.update },
 	                _react2['default'].createElement(
 	                    'option',
-	                    { value: 'Fraud' },
-	                    'Fraud'
+	                    { value: 'fraud' },
+	                    'fraud'
 	                ),
 	                _react2['default'].createElement(
 	                    'option',
-	                    { value: 'Theft' },
-	                    'Theft'
+	                    { value: 'theft' },
+	                    'theft'
 	                ),
 	                _react2['default'].createElement(
 	                    'option',
-	                    { value: 'Espionage' },
-	                    'Espionage'
+	                    { value: 'espionage' },
+	                    'espionage'
 	                ),
 	                _react2['default'].createElement(
 	                    'option',
-	                    { value: 'Bears', selected: true },
-	                    'Bears'
+	                    { value: 'bears' },
+	                    'bears'
 	                )
 	            )
 	        );
