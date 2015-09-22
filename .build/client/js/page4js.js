@@ -25231,12 +25231,6 @@
 	            return this.setState({
 	                dataTable: this.state.data
 	            });
-	            // return this.setState({
-	            //     data: (!!this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value)
-	            //             ? _.defaults(this.state.data,
-	            //                       this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value)
-	            //             : this.state.data
-	            // });
 	        },
 
 	        render: function render() {
