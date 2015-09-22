@@ -25203,7 +25203,131 @@
 
 	    console.log('in react stuff!');
 
-	    //**************************** MOUNTING PRACTICE ***************************//
+	    //**************************** DYNAMIC COMPONENTS ***************************//
+	    var personData = [{ id: 1, fname: "Simon", lname: "Shollenberger" }, { id: 2, fname: "Joe", lname: "Peters" }, { id: 3, fname: "John", lname: "Moss" }, { id: 4, fname: "Jack", lname: "Penner" }, { id: 5, fname: "Albert", lname: "Doggs" }, { id: 6, fname: "Isabelle", lname: "McNeil" }, { id: 7, fname: "Meeka", lname: "Faulkner" }, { id: 8, fname: "Callie", lname: "Peeke" }, { id: 9, fname: "Lisa", lname: "Faulkner" }, { id: 10, fname: "Boo", lname: "TheGhost" }, { id: 11, fname: "Fish", lname: "TheFish" }];
+
+	    // React.render(<AddPersonBlock />, document.getElementById('react-component-9'));
+
+	    var PersonTable = _react2['default'].createClass({
+	        displayName: 'PersonTable',
+
+	        getInitialState: function getInitialState() {
+	            return {
+	                data: personData
+	            };
+	        },
+
+	        update: function update(e) {
+	            console.log('update!');
+	            console.log('this.state.data:::');
+	            console.log(this.state.data);
+	            if (!!this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value) {
+	                this.state.data.push({
+	                    id: this.state.data.length + 1,
+	                    fname: this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value,
+	                    lname: 'no last name :('
+	                });
+	            }
+	            return this.setState({
+	                dataTable: this.state.data
+	            });
+	            // return this.setState({
+	            //     data: (!!this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value)
+	            //             ? _.defaults(this.state.data,
+	            //                       this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value)
+	            //             : this.state.data
+	            // });
+	        },
+
+	        render: function render() {
+	            var rows = this.state.data.map(function (person) {
+	                return _react2['default'].createElement(PersonRow, { data: person, key: person.id });
+	            });
+	            return _react2['default'].createElement(
+	                'div',
+	                null,
+	                _react2['default'].createElement(
+	                    'table',
+	                    { ref: 'dataTable' },
+	                    rows
+	                ),
+	                _react2['default'].createElement(AddPersonBlock, { ref: 'addPersonBlock',
+	                    personDataTable: this.state.data,
+	                    update: this.update })
+	            );
+	        }
+	    });
+
+	    var PersonRow = _react2['default'].createClass({
+	        displayName: 'PersonRow',
+
+	        // propTypes: {
+	        //     personDataTable: React.PropTypes.Array
+	        // },
+	        render: function render() {
+	            //this.props.data is the data that was passed in to personRow
+	            return _react2['default'].createElement(
+	                'tr',
+	                null,
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    this.props.data.id > 9 ? this.props.data.id : '0' + this.props.data.id
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    ' | '
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    this.props.data.fname
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    ' | '
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    this.props.data.lname
+	                )
+	            );
+	        }
+	    });
+
+	    var AddPersonBlock = _react2['default'].createClass({
+	        displayName: 'AddPersonBlock',
+
+	        render: function render() {
+	            console.log('AddPersonBlock rendered!');
+	            console.log(this.props);
+	            return _react2['default'].createElement(
+	                'div',
+	                { className: 'AddPersonBlock' },
+	                _react2['default'].createElement('br', null),
+	                _react2['default'].createElement(
+	                    'span',
+	                    null,
+	                    _react2['default'].createElement('input', { type: 'text', ref: 'addPersonTextBox' }),
+	                    '. .'
+	                ),
+	                _react2['default'].createElement(
+	                    'button',
+	                    { onClick: this.props.update, ref: 'addPersonBtn' },
+	                    'Add Person'
+	                )
+	            );
+	        }
+	    });
+
+	    _react2['default'].render(_react2['default'].createElement(PersonTable, null), document.getElementById('react-component-8'));
+	    //**************************************************************************//
+	    //END DYNAMIC COMPONENTS
+
+	    //**************************** UPDATE LIFECYCLE ****************************//
 	    var ButtonWithUpdateLifecycle = _react2['default'].createClass({
 	        displayName: 'ButtonWithUpdateLifecycle',
 
@@ -25600,6 +25724,7 @@
 	_react2['default'].render(_react2['default'].createElement(AppTwo, { age: 20 }), document.getElementById('react-component-2'));
 	//*************************************************************************//
 
+	//**************************** REFERENCING PARENT ****************************//
 	//**************************** COMPONENT SET 2 ****************************//
 	//<CaseBox>
 	//  |--> <TextInputter>
@@ -25647,7 +25772,7 @@
 	});
 
 	/**
-	 * [render description]
+	 * <TextInputter>
 	 * @param  {String} ) {                   return (            <div className [description]
 	 * @return {[type]}   [description]
 	 */
@@ -25670,7 +25795,7 @@
 	});
 
 	/**
-	 * [render description]
+	 * <DropdownInputter>
 	 * @return {ReactComponent} A react component for a dropdown menu
 	 */
 	var DropdownInputter = _react2['default'].createClass({
@@ -25719,9 +25844,9 @@
 	    }
 	});
 
-	//*************************************************************************//
-
 	_react2['default'].render(_react2['default'].createElement(CaseBox, null), document.getElementById('react-component-3'));
+	//*************************************************************************//
+	//****************************************************************************//
 
 /***/ },
 /* 8 */

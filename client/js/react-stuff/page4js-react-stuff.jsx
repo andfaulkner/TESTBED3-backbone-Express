@@ -10,8 +10,111 @@ module.exports = (function page4jsReactStuff_Module(){
 
     console.log('in react stuff!');
 
+//**************************** DYNAMIC COMPONENTS ***************************//
+var personData = [
+    {id: 1, fname: "Simon", lname: "Shollenberger"},
+    {id: 2, fname: "Joe", lname: "Peters"},
+    {id: 3, fname: "John", lname: "Moss"},
+    {id: 4, fname: "Jack", lname: "Penner"},
+    {id: 5, fname: "Albert", lname: "Doggs"},
+    {id: 6, fname: "Isabelle", lname: "McNeil"},
+    {id: 7, fname: "Meeka", lname: "Faulkner"},
+    {id: 8, fname: "Callie", lname: "Peeke"},
+    {id: 9, fname: "Lisa", lname: "Faulkner"},
+    {id: 10, fname: "Boo", lname: "TheGhost"},
+    {id: 11, fname: "Fish", lname: "TheFish"}
+];
 
-//**************************** MOUNTING PRACTICE ***************************//
+
+// React.render(<AddPersonBlock />, document.getElementById('react-component-9'));
+
+
+var PersonTable = React.createClass({
+    getInitialState: function() {
+        return {
+            data: personData
+        };
+    },
+
+    update: function(e){
+        console.log('update!');
+        console.log('this.state.data:::');
+        console.log(this.state.data);
+        if (!!this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value){
+            this.state.data.push({
+                id: this.state.data.length + 1,
+                fname: this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value,
+                lname: 'no last name :('
+            });
+        }
+        return this.setState({
+            dataTable: this.state.data
+        });
+        // return this.setState({
+        //     data: (!!this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value)
+        //             ? _.defaults(this.state.data,
+        //                       this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value)
+        //             : this.state.data
+        // });
+    },
+
+    render: function() {
+        var rows = this.state.data.map(function(person){
+            return <PersonRow data={person} key={person.id} />
+        });
+        return (
+            <div>
+                <table ref='dataTable'>{rows}</table>
+                <AddPersonBlock ref="addPersonBlock"
+                                personDataTable={this.state.data}
+                                update={this.update}/>
+            </div>
+        );
+    }
+});
+
+
+var PersonRow = React.createClass({
+    // propTypes: {
+    //     personDataTable: React.PropTypes.Array
+    // },
+    render: function() {
+        //this.props.data is the data that was passed in to personRow
+        return (
+            <tr >
+                <td>{(this.props.data.id > 9)
+                        ? this.props.data.id
+                        : '0' + this.props.data.id}</td>
+                <td> | </td>
+                <td>{this.props.data.fname}</td>
+                <td> | </td>
+                <td>{this.props.data.lname}</td>
+            </tr>
+        );
+    }
+});
+
+
+var AddPersonBlock = React.createClass({
+
+    render: function() {
+        console.log('AddPersonBlock rendered!');
+        console.log(this.props);
+        return (
+            <div className="AddPersonBlock"><br/>
+                <span><input type="text" ref='addPersonTextBox'/>. .</span>
+                <button onClick={this.props.update} ref='addPersonBtn'>Add Person</button>
+            </div>
+        );
+    }
+});
+
+React.render(<PersonTable/>, document.getElementById('react-component-8'));
+//**************************************************************************//
+//END DYNAMIC COMPONENTS
+
+
+//**************************** UPDATE LIFECYCLE ****************************//
     var ButtonWithUpdateLifecycle = React.createClass({
 
         getInitialState: function() {
@@ -330,7 +433,7 @@ React.render(<AppTwo age={20} />, document.getElementById('react-component-2'));
 //*************************************************************************//
 
 
-
+//**************************** REFERENCING PARENT ****************************//
 //**************************** COMPONENT SET 2 ****************************//
 //<CaseBox>
 //  |--> <TextInputter>
@@ -370,7 +473,7 @@ var CaseBox = React.createClass({
 
 
 /**
- * [render description]
+ * <TextInputter>
  * @param  {String} ) {                   return (            <div className [description]
  * @return {[type]}   [description]
  */
@@ -387,7 +490,7 @@ var TextInputter = React.createClass({
 
 
 /**
- * [render description]
+ * <DropdownInputter>
  * @return {ReactComponent} A react component for a dropdown menu
  */
 var DropdownInputter = React.createClass({
@@ -412,8 +515,6 @@ var DropdownInputter = React.createClass({
     }
 });
 
-
-//*************************************************************************//
-
-
 React.render(<CaseBox />, document.getElementById('react-component-3'));
+//*************************************************************************//
+//****************************************************************************//
