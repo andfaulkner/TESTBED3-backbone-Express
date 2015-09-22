@@ -1,3 +1,9 @@
+/***************************************************************************************************
+*
+*   REACT TINKERING
+*
+*/
+
 import React from 'react';
 
 module.exports = (function page4jsReactStuff_Module(){
@@ -5,6 +11,126 @@ module.exports = (function page4jsReactStuff_Module(){
     console.log('in react stuff!');
 
 
+//**************************** MOUNTING PRACTICE ***************************//
+    var ButtonWithUpdateLifecycle = React.createClass({
+
+        getInitialState: function() {
+            return {
+                increasingAndNot10Divisble: false
+            };
+        },
+        update: function(){
+            this.setProps({val: this.props.val + 1});
+        },
+
+        componentWillReceiveProps: function(nextProps){
+            this.setState({ increasingAndNot10Divisble: (nextProps.val > this.props.val) &&
+                                                         nextProps.val % 10 !== 0 });
+        },
+
+        /**
+         * Only allow component to update if the function returns true
+         * nextProps: values the properties will be set to after update completes
+         * nextState: state of the component following the update
+         */
+        shouldComponentUpdate: function(nextProps, nextState){
+            console.log(nextState);
+            return nextProps.val % 5 === 0;
+        },
+
+        render: function() {
+            console.log(this.state.increasingAndNot10Divisble);
+            console.log(this.props.val);
+            return (<button onClick={this.update}>{this.props.val}</button>);
+        },
+
+        /**
+         * Do something after component update complete
+         * prevProps & prevState: pre-update component properties & state, respectively;
+         */
+        componentDidUpdate: function(prevProps, prevState) {
+            console.log('prevProps: ', prevProps);
+        }
+
+    });
+
+    React.render(<ButtonWithUpdateLifecycle val={0} />, document.getElementById('react-component-7'));
+
+//**************************** MOUNTING PRACTICE ***************************//
+    var ButtonToMount2 = React.createClass({
+
+        getInitialState: function() {
+            return {
+                val: 0
+            };
+        },
+
+        update: function(){
+            return this.setState({val: this.state.val + 1});
+        },
+
+        //[1] Run when mounting component
+        componentWillMount: function(){
+            this.setState({valAppearingOnMount: 2});
+            console.log('component will mount!');
+        },
+
+        //[2] Mount component
+        render: function() {
+            return (
+                <button onClick={this.update}>
+                    {this.state.valAppearingOnMount*this.state.val}
+                </button>
+            );
+        },
+
+        //[3] Run directly after component mounted
+        // You can access the mounted component - in the DOM - from here
+        componentDidMount: function(){
+            console.log('component mounted!');
+            console.log('this.getDOMNode(): ');
+            console.log(this.getDOMNode());
+            this.inc = setInterval(this.update, 500); // this.update runs every 500ms
+        },
+
+        //[4] Run directly before component unmounts
+        componentWillUnmount: function(){
+            clearInterval(this.inc);    // stop interval firing of this.update on unmount
+            console.log('component about to unmount!');
+        }
+    });
+
+
+    var ButtonMounter2 = React.createClass({
+
+        //function that is called to mount the new element
+        mountEl: function() {
+            React.render(<ButtonToMount2 />, document.getElementById('mount-buttontomount2-here'));
+        },
+
+        //function that is called to unmount the new element
+        unmountEl: function() {
+            React.unmountComponentAtNode(document.getElementById('mount-buttontomount2-here'));
+        },
+
+        render: function() {
+            return (
+                <div>
+                    <button onClick={this.mountEl}>Mount ButtonToMount2</button>
+                    <button onClick={this.unmountEl}>Unmount ButtonToMount2</button>
+                    <div id='mount-buttontomount2-here'></div>
+                </div>
+            );
+        }
+    });
+
+    React.render(<ButtonMounter2 />, document.getElementById('react-component-6'));
+//*************************************************************************//
+
+
+
+
+//**************************** SPACER COMPONENT ****************************//
     /**
      * Spaces sections of test page out, adds long makeshift line as separater
      */
@@ -21,6 +147,7 @@ module.exports = (function page4jsReactStuff_Module(){
         }
     });
 
+    React.render(<Spacer/>, document.getElementById('spacer-slot-2'));
     React.render(<Spacer/>, document.getElementById('cutoff-betw-bb-and-react-views'));
 
 
@@ -39,9 +166,7 @@ module.exports = (function page4jsReactStuff_Module(){
         render: function() {
             console.log('BF - rendering');
             return (
-                <button onClick={this.update}>
-                    {this.state.val}
-                </button>
+                <button onClick={this.update}> {this.state.val} </button>
             );
         },
 
@@ -81,6 +206,8 @@ module.exports = (function page4jsReactStuff_Module(){
 
 //*************************************************************************//
 
+
+
 //**************************** COMPONENT SET 4 ****************************//
 // <AppThree>
 //   |--> <ButtonTwo>
@@ -117,6 +244,8 @@ module.exports = (function page4jsReactStuff_Module(){
     React.render(<AppThree/>, document.getElementById('react-component-4'));
 
 //*************************************************************************//
+
+
 
 //**************************** COMPONENT SET 1 ****************************//
 // <App>
@@ -198,7 +327,7 @@ var AppTwo = React.createClass({
 });
 
 React.render(<AppTwo age={20} />, document.getElementById('react-component-2'));
-
+//*************************************************************************//
 
 
 

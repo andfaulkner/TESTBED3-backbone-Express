@@ -25185,6 +25185,12 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/***************************************************************************************************
+	*
+	*   REACT TINKERING
+	*
+	*/
+
 	'use strict';
 
 	var _interopRequireDefault = __webpack_require__(8)['default'];
@@ -25197,6 +25203,136 @@
 
 	    console.log('in react stuff!');
 
+	    //**************************** MOUNTING PRACTICE ***************************//
+	    var ButtonWithUpdateLifecycle = _react2['default'].createClass({
+	        displayName: 'ButtonWithUpdateLifecycle',
+
+	        getInitialState: function getInitialState() {
+	            return {
+	                increasingAndNot10Divisble: false
+	            };
+	        },
+	        update: function update() {
+	            this.setProps({ val: this.props.val + 1 });
+	        },
+
+	        componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	            this.setState({ increasingAndNot10Divisble: nextProps.val > this.props.val && nextProps.val % 10 !== 0 });
+	        },
+
+	        /**
+	         * Only allow component to update if the function returns true
+	         * nextProps: values the properties will be set to after update completes
+	         * nextState: state of the component following the update
+	         */
+	        shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	            console.log(nextState);
+	            return nextProps.val % 5 === 0;
+	        },
+
+	        render: function render() {
+	            console.log(this.state.increasingAndNot10Divisble);
+	            console.log(this.props.val);
+	            return _react2['default'].createElement(
+	                'button',
+	                { onClick: this.update },
+	                this.props.val
+	            );
+	        },
+
+	        /**
+	         * Do something after component update complete
+	         * prevProps & prevState: pre-update component properties & state, respectively;
+	         */
+	        componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	            console.log('prevProps: ', prevProps);
+	        }
+
+	    });
+
+	    _react2['default'].render(_react2['default'].createElement(ButtonWithUpdateLifecycle, { val: 0 }), document.getElementById('react-component-7'));
+
+	    //**************************** MOUNTING PRACTICE ***************************//
+	    var ButtonToMount2 = _react2['default'].createClass({
+	        displayName: 'ButtonToMount2',
+
+	        getInitialState: function getInitialState() {
+	            return {
+	                val: 0
+	            };
+	        },
+
+	        update: function update() {
+	            return this.setState({ val: this.state.val + 1 });
+	        },
+
+	        //[1] Run when mounting component
+	        componentWillMount: function componentWillMount() {
+	            this.setState({ valAppearingOnMount: 2 });
+	            console.log('component will mount!');
+	        },
+
+	        //[2] Mount component
+	        render: function render() {
+	            return _react2['default'].createElement(
+	                'button',
+	                { onClick: this.update },
+	                this.state.valAppearingOnMount * this.state.val
+	            );
+	        },
+
+	        //[3] Run directly after component mounted
+	        // You can access the mounted component - in the DOM - from here
+	        componentDidMount: function componentDidMount() {
+	            console.log('component mounted!');
+	            console.log('this.getDOMNode(): ');
+	            console.log(this.getDOMNode());
+	            this.inc = setInterval(this.update, 500); // this.update runs every 500ms
+	        },
+
+	        //[4] Run directly before component unmounts
+	        componentWillUnmount: function componentWillUnmount() {
+	            clearInterval(this.inc); // stop interval firing of this.update on unmount
+	            console.log('component about to unmount!');
+	        }
+	    });
+
+	    var ButtonMounter2 = _react2['default'].createClass({
+	        displayName: 'ButtonMounter2',
+
+	        //function that is called to mount the new element
+	        mountEl: function mountEl() {
+	            _react2['default'].render(_react2['default'].createElement(ButtonToMount2, null), document.getElementById('mount-buttontomount2-here'));
+	        },
+
+	        //function that is called to unmount the new element
+	        unmountEl: function unmountEl() {
+	            _react2['default'].unmountComponentAtNode(document.getElementById('mount-buttontomount2-here'));
+	        },
+
+	        render: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                null,
+	                _react2['default'].createElement(
+	                    'button',
+	                    { onClick: this.mountEl },
+	                    'Mount ButtonToMount2'
+	                ),
+	                _react2['default'].createElement(
+	                    'button',
+	                    { onClick: this.unmountEl },
+	                    'Unmount ButtonToMount2'
+	                ),
+	                _react2['default'].createElement('div', { id: 'mount-buttontomount2-here' })
+	            );
+	        }
+	    });
+
+	    _react2['default'].render(_react2['default'].createElement(ButtonMounter2, null), document.getElementById('react-component-6'));
+	    //*************************************************************************//
+
+	    //**************************** SPACER COMPONENT ****************************//
 	    /**
 	     * Spaces sections of test page out, adds long makeshift line as separater
 	     */
@@ -25215,6 +25351,7 @@
 	        }
 	    });
 
+	    _react2['default'].render(_react2['default'].createElement(Spacer, null), document.getElementById('spacer-slot-2'));
 	    _react2['default'].render(_react2['default'].createElement(Spacer, null), document.getElementById('cutoff-betw-bb-and-react-views'));
 
 	    //**************************** COMPONENT SET 5 ****************************//
@@ -25236,7 +25373,9 @@
 	            return _react2['default'].createElement(
 	                'button',
 	                { onClick: this.update },
-	                this.state.val
+	                ' ',
+	                this.state.val,
+	                ' '
 	            );
 	        },
 
@@ -25459,6 +25598,7 @@
 	});
 
 	_react2['default'].render(_react2['default'].createElement(AppTwo, { age: 20 }), document.getElementById('react-component-2'));
+	//*************************************************************************//
 
 	//**************************** COMPONENT SET 2 ****************************//
 	//<CaseBox>
