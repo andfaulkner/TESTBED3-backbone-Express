@@ -47,95 +47,95 @@ module.exports = (function page4jsReactStuff_Module(){
     //
     //-----
 
-    var puppyData = [
-        {id: 1, firstName: 'Meeka', lastName: 'PeekaFaulkner'},
-        {id: 2, firstName: 'Callie', lastName: 'Peeke'},
-        {id: 3, firstName: 'Osiris', lastName: 'Persia'},
-        {id: 4, firstName: 'Lako', lastName: 'Bakota'}
-    ]
+    // var puppyData = [
+    //     {id: 1, firstName: 'Meeka', lastName: 'PeekaFaulkner'},
+    //     {id: 2, firstName: 'Callie', lastName: 'Peeke'},
+    //     {id: 3, firstName: 'Osiris', lastName: 'Persia'},
+    //     {id: 4, firstName: 'Lako', lastName: 'Bakota'}
+    // ]
 
-    //================== COMPONENT ==================
-    //
-    //--
-    //
-    var DynamicDataBlock = React.createClass({
+    // //================== COMPONENT ==================
+    // //
+    // //--
+    // //
+    // var DynamicDataBlock = React.createClass({
 
-        //Sets up the initial state of the component - e.g. the initial variables' values
-        getInitialState: function(){
-            return { puppyDataTable: puppyData };
-        },
+    //     //Sets up the initial state of the component - e.g. the initial variables' values
+    //     getInitialState: function(){
+    //         return { puppyDataTable: puppyData };
+    //     },
 
-        // Run on component update; i.e. when this.update is called in 'this.render' below
-        update: function() {
-            puppyDataTable.push({ });
-            return this.setState({ });
-        },
+    //     // Run on component update; i.e. when this.update is called in 'this.render' below
+    //     update: function() {
+    //         puppyDataTable.push({ });
+    //         return this.setState({ });
+    //     },
 
-        //[2] Mount component
-        render: function() {
+    //     //[2] Mount component
+    //     render: function() {
 
-            this.rows = this.state.puppyDataTable.map(function(puppy){
-                return ( <PuppyTableRow data={puppy} key={puppy.id}} />  );
-            });
+    //         this.rows = this.state.puppyDataTable.map(function(puppy){
+    //             return ( <PuppyTableRow data={puppy} key={puppy.id}} />  );
+    //         });
 
-            return (
-                <div className="DynamicDataBlock">
-                    <table>{rows}</table>
-                    <AddPuppy update={this.update} />
-                    <SubmitPuppies />
-                </div>
-            );
-        },
+    //         return (
+    //             <div className="DynamicDataBlock">
+    //                 <table>{rows}</table>
+    //                 <AddPuppy update={this.update} />
+    //                 <SubmitPuppies />
+    //             </div>
+    //         );
+    //     },
 
-    });
-    //===============================================
-
-
-
-    //================== COMPONENT ==================
-    //
-    //--
-    //
-    var PuppyTableRow = React.createClass({
-        render: function() {
-            return (
-                <
-            );
-
-        }
-    });
-    //===============================================
+    // });
+    // //===============================================
 
 
-    //================== COMPONENT ==================
-    //
-    //--
-    //
-    var AddPuppy = React.createClass({
-        render: function() {
-            return (
-                <div className="AddPuppy"></div>
-            );
-        }
-    });
-    //===============================================
+
+    // //================== COMPONENT ==================
+    // //
+    // //--
+    // //
+    // var PuppyTableRow = React.createClass({
+    //     render: function() {
+    //         return (
+    //             <
+    //         );
+
+    //     }
+    // });
+    // //===============================================
 
 
-    //================== COMPONENT ==================
-    //
-    //--
-    //
-    var SubmitPuppies = React.createClass({
-        render: function() {
-            return (
-                <div className="SubmitPuppies"></div>
-            );
-        }
-    });
-    //===============================================
+    // //================== COMPONENT ==================
+    // //
+    // //--
+    // //
+    // var AddPuppy = React.createClass({
+    //     render: function() {
+    //         return (
+    //             <div className="AddPuppy"></div>
+    //         );
+    //     }
+    // });
+    // //===============================================
 
 
-    React.render(<DynamicDataBlock />, __domNodeToAttachTo);
+    // //================== COMPONENT ==================
+    // //
+    // //--
+    // //
+    // var SubmitPuppies = React.createClass({
+    //     render: function() {
+    //         return (
+    //             <div className="SubmitPuppies"></div>
+    //         );
+    //     }
+    // });
+    // //===============================================
+
+
+    // React.render(<DynamicDataBlock />, __domNodeToAttachTo);
 
     //-----
     //
