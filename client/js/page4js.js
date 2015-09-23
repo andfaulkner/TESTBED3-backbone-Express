@@ -4,8 +4,8 @@ require('./react-stuff/page4js-react-stuff.jsx');
 
 (function page4js_module(_){
     var bears = require('./models/modelData/bears-model-data');
-    console.log('in 4!');
-    console.log(bears);
+    // console.log('in 4!');
+    // console.log(bears);
 
     var bearModels = { };
     var bearModelInsts = { };
@@ -26,7 +26,7 @@ require('./react-stuff/page4js-react-stuff.jsx');
     });
 
     var bearCollection = new BearCollection(bears);
-    console.log(bearCollection);
+    // console.log(bearCollection);
     //*************************************************************************//
 
     var BearView = Backbone.View.extend({

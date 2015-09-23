@@ -1,0 +1,49 @@
+//*****************************************************************************//
+/****** REDUX
+//*****************************************************************************//
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////// DEFINITIONS ///////////////////////////////////////////
+action:         plain object that represents an intention to change the state. The only way to get
+                data into the store. Any data, whether from UI events, network callbacks, or other
+                sources (e.g. WebSockets) must eventually be dispatched as actions.
+                Actions should have a type field indicating type of action being performed.
+
+reducer:        function that accepts an 'accumulation' and a value, and returns a new 'accumulation'.
+                Used to reduce a collection of values to a single value. The accumulated value is the
+                state object, and the values being accumulated are actions. Reducers calculate a new
+                state given the previous state and an action.
+                Reducers must be:
+                    pure functions: functions that always return the same output for given inputs.
+                    free of side-effects (which enables features like hot reloading and time travel)
+                The most important aspect of Redux.
+
+state:          refers to the single state value that is managed by the store and returned by getState().
+                Represents entire state of Redux app, which is often a deeply nested obj.
+                Should always be easily convertable to JSON.
+                State is read-only - the only way to mutate it is by emitting an action.
+
+state tree:     Basically synonymous with state.
+
+store:          Object that holds the application's state tree
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+/****************************//
+/**** Overview
+/****************************//
+- entire app state stored in an object tree in a single 'store'
+    - Key point: ENTIRE app state
+
+- state tree changed by emitting an 'action'
+    - action = object describing what just happened
+
+- 'reducers' specify how actions transform the state tree
+
+//---- SCALING ----/
+- REMEMBER: just a single store with a single root reducing function
+    - to scale, split root reducer into smaller reducers that independently operate on
+      different parts of the state tree
+- think of it as akin to a React app with a single root component that is composed of
+  many small components

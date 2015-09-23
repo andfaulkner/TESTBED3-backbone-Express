@@ -4,111 +4,289 @@
 *
 */
 
-import React from 'react';
+/**
+ * REACT DEFINITIONS
+ *
+ * ReactElement   :     Single virtual DOM node usable by a ReactComponent. Defined using JSX tags.
+ *                      E.g. <input type="text" /> - in JSX - is a ReactElement. Outside JSX, def
+ *                      w React.createElement('input', { type: 'text' });  [or something like that]
+ *
+ * ReactComponent :
+ *
+ * Uncontrolled         An e.g. <input> that does not supply a value (or sets it to null) is an
+ * Components     :     uncontrolled component. In an uncontrolled <input>, the value of the
+ *                      rendered element will reflect the user's input. To listen to updates to the
+ *                      value, use inline onChange event, within the tag - e.g.
+ *                          <input type="text" onChange={this.someChangeHandlingFn} />
+ *                          ... where someChangeHandlingFn is defined earlier in the component...
+ *                            handleChange: function(event) {
+ *                                this.setState({ value: event.target.value.substr(0, 140) });
+ *                            }
+ */
 
+
+
+
+
+//Imports React...obviously
+import React from 'react';
+import { Router, Route, Link } from 'react-router';
+
+
+/**
+ * From here down, exported to the browser
+ */
 module.exports = (function page4jsReactStuff_Module(){
 
-    console.log('in react stuff!');
-
-//**************************** DYNAMIC COMPONENTS ***************************//
-var personData = [
-    {id: 1, fname: "Simon", lname: "Shollenberger"},
-    {id: 2, fname: "Joe", lname: "Peters"},
-    {id: 3, fname: "John", lname: "Moss"},
-    {id: 4, fname: "Jack", lname: "Penner"},
-    {id: 5, fname: "Albert", lname: "Doggs"},
-    {id: 6, fname: "Isabelle", lname: "McNeil"},
-    {id: 7, fname: "Meeka", lname: "Faulkner"},
-    {id: 8, fname: "Callie", lname: "Peeke"},
-    {id: 9, fname: "Lisa", lname: "Faulkner"},
-    {id: 10, fname: "Boo", lname: "TheGhost"},
-    {id: 11, fname: "Fish", lname: "TheFish"}
-];
+    // console.log('in react stuff!');
 
 
-// React.render(<AddPersonBlock />, document.getElementById('react-component-9'));
+    //*****************************************************************************
+    //
+    //      DYNAMIC COMPONENTS TWO (See below for DYNAMIC COMPONENTS ONE)
+    //
+    //-----
 
+    var puppyData = [
+        {id: 1, firstName: 'Meeka', lastName: 'PeekaFaulkner'},
+        {id: 2, firstName: 'Callie', lastName: 'Peeke'},
+        {id: 3, firstName: 'Osiris', lastName: 'Persia'},
+        {id: 4, firstName: 'Lako', lastName: 'Bakota'}
+    ]
 
-var PersonTable = React.createClass({
-    getInitialState: function() {
-        return {
-            data: personData
-        };
-    },
+    //================== COMPONENT ==================
+    //
+    //--
+    //
+    var DynamicDataBlock = React.createClass({
 
-    update: function(e){
-        console.log('update!');
-        console.log('this.state.data:::');
-        console.log(this.state.data);
-        if (!!this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value){
-            this.state.data.push({
-                id: this.state.data.length + 1,
-                fname: this.refs.addPersonBlock.refs.addPersonTextBox.getDOMNode().value,
-                lname: 'no last name :('
+        //Sets up the initial state of the component - e.g. the initial variables' values
+        getInitialState: function(){
+            return { puppyDataTable: puppyData };
+        },
+
+        // Run on component update; i.e. when this.update is called in 'this.render' below
+        update: function() {
+            puppyDataTable.push({ });
+            return this.setState({ });
+        },
+
+        //[2] Mount component
+        render: function() {
+
+            this.rows = this.state.puppyDataTable.map(function(puppy){
+                return ( <PuppyTableRow data={puppy} key={puppy.id}} />  );
             });
+
+            return (
+                <div className="DynamicDataBlock">
+                    <table>{rows}</table>
+                    <AddPuppy update={this.update} />
+                    <SubmitPuppies />
+                </div>
+            );
+        },
+
+    });
+    //===============================================
+
+
+
+    //================== COMPONENT ==================
+    //
+    //--
+    //
+    var PuppyTableRow = React.createClass({
+        render: function() {
+            return (
+                <
+            );
+
         }
-        return this.setState({
-            dataTable: this.state.data
-        });
-    },
-
-    render: function() {
-        var rows = this.state.data.map(function(person){
-            return <PersonRow data={person} key={person.id} />
-        });
-        return (
-            <div>
-                <table ref='dataTable'>{rows}</table>
-                <AddPersonBlock ref="addPersonBlock"
-                                personDataTable={this.state.data}
-                                update={this.update}/>
-            </div>
-        );
-    }
-});
+    });
+    //===============================================
 
 
-var PersonRow = React.createClass({
-    // propTypes: {
-    //     personDataTable: React.PropTypes.Array
-    // },
-    render: function() {
-        //this.props.data is the data that was passed in to personRow
-        return (
-            <tr >
-                <td>{(this.props.data.id > 9)
-                        ? this.props.data.id
-                        : '0' + this.props.data.id}</td>
-                <td> | </td>
-                <td>{this.props.data.fname}</td>
-                <td> | </td>
-                <td>{this.props.data.lname}</td>
-            </tr>
-        );
-    }
-});
+    //================== COMPONENT ==================
+    //
+    //--
+    //
+    var AddPuppy = React.createClass({
+        render: function() {
+            return (
+                <div className="AddPuppy"></div>
+            );
+        }
+    });
+    //===============================================
 
 
-var AddPersonBlock = React.createClass({
-
-    render: function() {
-        console.log('AddPersonBlock rendered!');
-        console.log(this.props);
-        return (
-            <div className="AddPersonBlock"><br/>
-                <span><input type="text" ref='addPersonTextBox'/>. .</span>
-                <button onClick={this.props.update} ref='addPersonBtn'>Add Person</button>
-            </div>
-        );
-    }
-});
-
-React.render(<PersonTable/>, document.getElementById('react-component-8'));
-//**************************************************************************//
-//END DYNAMIC COMPONENTS
+    //================== COMPONENT ==================
+    //
+    //--
+    //
+    var SubmitPuppies = React.createClass({
+        render: function() {
+            return (
+                <div className="SubmitPuppies"></div>
+            );
+        }
+    });
+    //===============================================
 
 
-//**************************** UPDATE LIFECYCLE ****************************//
+    React.render(<DynamicDataBlock />, __domNodeToAttachTo);
+
+    //-----
+    //
+    //      END DYNAMIC COMPONENTS TWO
+    //
+    //**************************************************************************//
+
+
+    //*****************************************************************************
+    //
+    //      DYNAMIC COMPONENTS
+    //
+    //-----
+    var personData = [
+        {id: 1, fname: "Simon", lname: "Shollenberger"},
+        {id: 2, fname: "Joe", lname: "Peters"},
+        {id: 3, fname: "John", lname: "Moss"},
+        {id: 4, fname: "Jack", lname: "Penner"},
+        {id: 5, fname: "Albert", lname: "Doggs"},
+        {id: 6, fname: "Isabelle", lname: "McNeil"},
+        {id: 7, fname: "Meeka", lname: "Faulkner"},
+        {id: 8, fname: "Callie", lname: "Peeke"},
+        {id: 9, fname: "Lisa", lname: "Faulkner"},
+        {id: 10, fname: "Boo", lname: "TheGhost"},
+        {id: 11, fname: "Fish", lname: "TheFish"}
+    ];
+
+    //================== COMPONENT ==================
+    //
+    //-- Data table + way to dynamically add data: contains both table, & btn + txtbox to add items
+    //
+    var PersonTable = React.createClass({
+
+        //Grabs personData array, assigns it to this.state.data
+        //Anything returned from this becomes initial this.state
+        getInitialState: function() {
+            return {
+                data: personData
+            };
+        },
+
+        /**
+         * Used to update state when button
+         * @param  {[type]} e [description]
+         * @return shallow merge of nextState into current state (i.e. val made by this.setState)
+         */
+        update: function(e){
+            console.log('________ CONTENT ADD FUNCTION entered! (PersonTable.update) ________');
+            console.log('findDOMNode val: ');
+            console.log(React.findDOMNode(this.refs.dataAdder.refs.newLastNmTxtBox).value);
+            if (!!React.findDOMNode(this.refs.dataAdder.refs.newFirstNmTxtBox).value &&
+                    !!React.findDOMNode(this.refs.dataAdder.refs.newLastNmTxtBox).value){
+                this.state.data.push({
+                    id: this.state.data.length + 1,
+                    fname: React.findDOMNode(this.refs.dataAdder.refs.newFirstNmTxtBox).value,
+                    lname: React.findDOMNode(this.refs.dataAdder.refs.newLastNmTxtBox).value
+                });
+
+            }
+            return this.setState({ });
+        },
+
+        /**
+         * Displays the component & its children
+         * @return {JSXComponent} the JSX of the component; i.e. the component itself, for display
+         */
+        render: function() {
+            console.log('PersonTable.render::: this.state:'); console.log(this.state);
+            console.log('PersonTable.render::: this.props:'); console.log(this.props);
+            var rows = this.state.data.map(function(person){
+                return (<PersonRow data={person} key={person.id} />);
+            });
+            return (
+                <div>
+                    <table>{rows}</table>
+                    <AddPersonBlock ref="dataAdder" update={this.update} />
+                </div>
+            );
+        }
+    });
+    //===============================================
+
+
+
+    //================== COMPONENT ==================
+    //
+    //-- Single row of the data table
+    //      * this.state DOES NOT propagate downward
+    //      * propagation occurs through this.props
+    //
+    var PersonRow = React.createClass({
+
+        render: function() {
+            // console.log('PersonRow.render::: this.state:'); console.log(this.state);
+            // console.log('PersonRow.render::: this.props:'); console.log(this.props);
+            var dt = this.props.data; //this.props.data is the data that was passed in to personRow
+            return (
+                <tr>
+                    <td>{(dt.id > 9) ? dt.id : '0' + dt.id} </td>
+                    <td> | </td>    <td>{dt.fname}</td>
+                    <td> | </td>    <td>{dt.lname}</td>
+                </tr>
+            );
+        }
+
+    });
+    //===============================================
+
+
+
+    //================== COMPONENT ==================
+    //
+    //-- Textbox and button to add contents of textbox to data table
+    //      * this.state DOES NOT propagate downward
+    //      * propagation occurs through this.props
+    //
+    var AddPersonBlock = React.createClass({
+
+        render: function() {
+            console.log('AddPersonBlock.render::: this.state:'); console.log(this.state);
+            console.log('AddPersonBlock.render::: this.props:'); console.log(this.props);
+            return (
+                <div className="AddPersonBlock"><br/>
+                    <span><input type="text" ref='newFirstNmTxtBox'/>. .</span>
+                    <span><input type="text" ref='newLastNmTxtBox'/>. .</span>
+                    <button onClick={this.props.update}>Add Person</button>
+                </div>
+            );
+        }
+
+    });
+    //===============================================
+
+    //Render components
+    React.render(<PersonTable/>, document.getElementById('react-component-8'));
+
+    //-----
+    //
+    //      END DYNAMIC COMPONENTS
+    //
+    //**************************************************************************//
+
+
+
+
+
+    //*****************************************************************************
+    //
+    //      UPDATE LIFECYCLE
+    //
+    //
     var ButtonWithUpdateLifecycle = React.createClass({
 
         getInitialState: function() {
@@ -131,13 +309,13 @@ React.render(<PersonTable/>, document.getElementById('react-component-8'));
          * nextState: state of the component following the update
          */
         shouldComponentUpdate: function(nextProps, nextState){
-            console.log(nextState);
+            // console.log(nextState);
             return nextProps.val % 5 === 0;
         },
 
         render: function() {
-            console.log(this.state.increasingAndNot10Divisble);
-            console.log(this.props.val);
+            // console.log(this.state.increasingAndNot10Divisble);
+            // console.log(this.props.val);
             return (<button onClick={this.update}>{this.props.val}</button>);
         },
 
@@ -146,7 +324,7 @@ React.render(<PersonTable/>, document.getElementById('react-component-8'));
          * prevProps & prevState: pre-update component properties & state, respectively;
          */
         componentDidUpdate: function(prevProps, prevState) {
-            console.log('prevProps: ', prevProps);
+            // console.log('prevProps: ', prevProps);
         }
 
     });
@@ -169,7 +347,7 @@ React.render(<PersonTable/>, document.getElementById('react-component-8'));
         //[1] Run when mounting component
         componentWillMount: function(){
             this.setState({valAppearingOnMount: 2});
-            console.log('component will mount!');
+            // console.log('component will mount!');
         },
 
         //[2] Mount component
@@ -184,16 +362,16 @@ React.render(<PersonTable/>, document.getElementById('react-component-8'));
         //[3] Run directly after component mounted
         // You can access the mounted component - in the DOM - from here
         componentDidMount: function(){
-            console.log('component mounted!');
-            console.log('this.getDOMNode(): ');
-            console.log(this.getDOMNode());
+            // console.log('component mounted!');
+            // console.log('this.getDOMNode(): ');
+            // console.log(this.getDOMNode());
             this.inc = setInterval(this.update, 500); // this.update runs every 500ms
         },
 
         //[4] Run directly before component unmounts
         componentWillUnmount: function(){
             clearInterval(this.inc);    // stop interval firing of this.update on unmount
-            console.log('component about to unmount!');
+            // console.log('component about to unmount!');
         }
     });
 
@@ -254,40 +432,40 @@ React.render(<PersonTable/>, document.getElementById('react-component-8'));
             return { val: 0 };
         },
         update: function(e){
-            console.log('BF - update');
+            // console.log('BF - update');
             this.setState({ val: this.state.val+1 });
         },
         componentWillMount: function(){
-            console.log('BF - mounting');
+            // console.log('BF - mounting');
         },
         render: function() {
-            console.log('BF - rendering');
+            // console.log('BF - rendering');
             return (
                 <button onClick={this.update}> {this.state.val} </button>
             );
         },
 
         componentDidMount: function(){
-            console.log('BF - mounted - componentDidMount');
+            // console.log('BF - mounted - componentDidMount');
         },
         componentWillUnmount: function(){
-            console.log('BF - unmounted! Byebye!');
+            // console.log('BF - unmounted! Byebye!');
         }
     });
 
     var AppFive = React.createClass({
         mountEl: function() {
-            console.log('AppFive - mounted - mount function');
+            // console.log('AppFive - mounted - mount function');
             React.render(<ButtonFive />, document.getElementById('app-five'));
         },
         unmountEl: function() {
-            console.log('AppFive - unmounted - unmount function');
+            // console.log('AppFive - unmounted - unmount function');
             React.unmountComponentAtNode(document.getElementById('app-five'));
         },
         render: function() {
-            console.log('AF - render');
-            console.log(this.mountEl);
-            console.log(this.unmountEl);
+            // console.log('AF - render');
+            // console.log(this.mountEl);
+            // console.log(this.unmountEl);
             return (
                 <div>
                     <button onClick={this.mountEl}>Mount</button>

@@ -1,15 +1,115 @@
+____________________________________________________________________________________
+react-router
+    npm install --save react-router
+    -- makes react handle client-side routing
+
+
+_________________________________________________________________________________________________________
+_________________________________________________________________________________________________________
+_________________________________________________________________________________________________________
+REDUX - FOR REACT - LIKE FLUX BUT MORE MINIMAL, MORE 'FUNCTIONAL'
+--- http://rackt.github.io/redux/docs/introduction/ThreePrinciples.html
+        :) :) :)
+_________________________________________________________________________________________________________
+                npm install --save redux
+                    ** https://github.com/rackt/redux
+
+    - Lets us store application state
+    -
+- Nice Redux ecosystem, though one isn't really needed given how minimal it is...
+
+    redux-logger: easy logging of redux actions: logs every
+       Redux action & the next 'state'.
+                npm install --save redux-logger
+                    ** https://github.com/fcomb/redux-logger
+
+    react-redux. Redux plays extremely well with React (obviously), with this
+       module intended to bind them.
+                npm install --save react-redux
+                    ** https://github.com/rackt/react-redux
+
+    redux-devtools:
+                npm install --save-dev redux-devtools
+                    ** https://github.com/gaearon/redux-devtools
+
+        ** https://github.com/rackt/react-router
+
+    redux-form. Keep React form state in Redux.
+                npm install redux-form
+                    ** https://github.com/erikras/redux-form    <<--- no lost form data :)
+
+    redux-router. Lets you keep your router state in your Redux store. Binds
+       to react-router.
+                npm install --save redux-router
+                    ** https://github.com/rackt/redux-router
+
+    If we use Redux...a nice standard form for 'actions':
+            ** https://github.com/acdlite/flux-standard-action
+_______________________________________________________________________________
+-- advantages:
+    - Same benefits as Flux, really.
+
+    - plays very nice with React (designed for it)...but isn't tied to it either.
+
+    - like Seneca (and Flux, for that matter), uses action-based architecture.
+        - this may make adaptation easier
+
+    - Lightweight
+
+    - Puts the entire state in one state tree, eliminating the 'what state are we
+      even in WTF?!?!?' logging/tracing hell we're in with Seneca.
+            -- All actions act on the one tree with Redux - not on various disparate
+               locations holding bits and pieces of state (as seems to happen with Seneca)
+
+    - Lineage of state trees are stored (temporarily). This allows time travel debugging.
+        - You can reproduce any exact state of the app at any point, by going to the starting state,
+          and replaying (literally replaying) the actions that occurred.
+        - Tracing what caused a change, and what change was produced === trivial (especially with redux-logger).
+        - ...together this turns the app into a starting state and a sequence of actions.
+            --- with the ability to do things like turn back one single action...then redo it again.
+
+    - It hotloads!!!! i.e. auto-updates view and reducer (controller?) components without reloading page.
+
+    - Performant & easy-to-understand state tracking. How Redux determines if a change has in
+      the model: checks if the state object is the same object it was before (because any change
+      in the model results in a whole new model being created - any given state tree is immutable).
+      Same object reference means same underlying data.
+        --- This lets us use '===' compares rather than deep compares. JS is very, very fast at this.
+https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux
+
+
+_________________________________________________________________
+IMMUTABLE-JS
+http://facebook.github.io/immutable-js/
+--- mutative API which does not update the data in-place, but instead always
+    yields new updated data
+--- WAY FASTER DEVELOPMENT. Allows e.g. hot-reloading, time travel, etc.
+--- Not actually slower. The entirety of Clojure & Clojurescript is based around
+    this idea, and the Om framework (https://github.com/omcljs/om) for ReactJS -
+    written with Clojurescript - is actually quite performant
+_________________________________________________________________
+
+
+_________________________________________________________________
+FLOW
+http://flowtype.org/
+--- syntax to allow 'gradual typing' - i.e. static type checker that uses
+    type inference and provided annotations to help find type errors
+--- No lock-in - gradual type system - you can easily write 'dynamic' parts
+    of the app that bypass the type checker
+    --- i.e. mixing statically typed code w/ dynamic code === encouraged
+--- just way easier debugging
+--- plays very, very nice with React & co.
+_________________________________________________________________
+
+
+_________________________________________________________________________________________________________
+_________________________________________________________________________________________________________
+_________________________________________________________________________________________________________
+
+
 GENERATE UML FOR NODEJS
 npm install wavi -g
-
-_________________________________________________________________
-REDUX - FOR REACT - LIKE FLUX BUT SUPER-MINIMAL
-        -- https://github.com/rackt/redux
-        -- https://github.com/rackt/react-redux
-        -- https://github.com/gaearon/redux-devtools
-        -- https://github.com/rackt/react-router
-        -- https://github.com/erikras/redux-form    <<--- no lost form data :)
-
-_________________________________________________________________
 
 _________________________________________________________________
 ** pub-sub for postgres module:
