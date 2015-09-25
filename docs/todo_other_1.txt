@@ -1,1 +1,73 @@
 - get DocBlockr
+
+- put a few Flow directives in
+    - install:
+        brew update
+        brew install flow
+    - then:
+        http://flowtype.org/docs/five-simple-examples.html#1-hello-flow
+        https://code.facebook.com/posts/1505962329687926/flow-a-new-static-type-checker-for-javascript/
+
+- vim-abolish - get it
+    - https://github.com/tpope/vim-abolish
+
+- try to get a dependency tree visualizer for Node working
+    - install https://www.npmjs.com/package/backtrack-require
+            npm i backtrack-require - g
+    https://github.com/pahen/madge
+            npm -g install madge
+            [[[sudo??]]] port install graphviz
+
+    npm install -g colony
+        https://github.com/hughsk/colony
+
+- ...or at least a dependency helper
+    https://github.com/substack/node-detective
+        npm install detective --save
+
+    Trace the dependency graph of a javascript file:
+        npm install -g subdeps
+        https://github.com/substack/node-subdeps
+
+
+JSON handling modules:
+https://www.npmjs.com/package/json-sql
+https://www.npmjs.com/package/json-merge-patch
+https://www.npmjs.com/package/json-merge
+https://www.npmjs.com/package/json-table
+https://www.npmjs.com/package/json-search
+https://www.npmjs.com/package/sequelize-json
+https://www.npmjs.com/package/json-linker
+https://www.npmjs.com/package/json-defiler
+https://www.npmjs.com/package/json-combinator
+https://www.npmjs.com/package/json-premerge
+https://www.npmjs.com/package/swish
+https://www.npmjs.com/package/broccoli-merge-json
+https://www.npmjs.com/package/json-normalizer
+
+Text handling modules:
+https://www.npmjs.com/package/gulp-js-text-inject
+https://www.npmjs.com/package/morph-text
+https://www.npmjs.com/package/text-scrub
+https://www.npmjs.com/package/text-diff
+https://www.npmjs.com/package/change-case
+
+Making single sources of config truth:
+https://www.npmjs.com/package/hyper-config
+
+Tracing modules:
+https://www.npmjs.com/package/backtrack-require
+https://www.npmjs.com/package/require-time
+https://www.npmjs.com/package/require-hook#what-is-collected
+
+Hooking require:
+https://www.npmjs.com/package/intercept-require
+
+Grabbing files effectively
+https://www.npmjs.com/package/gulp-require-src
+
+Static analysis:
+https://www.npmjs.com/package/flow-require
+
+JSON editor for form building (!) - 2 way: JSON --> form --> JSON (!!!):
+https://www.npmjs.com/package/json-editor

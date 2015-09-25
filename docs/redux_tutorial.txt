@@ -9,6 +9,8 @@ action:         plain object that represents an intention to change the state. T
                 sources (e.g. WebSockets) must eventually be dispatched as actions.
                 Actions should have a type field indicating type of action being performed.
 
+dispatcher:     event system that broadcasts events and registers callbacks.
+
 reducer:        function that accepts an 'accumulation' and a value, and returns a new 'accumulation'.
                 Used to reduce a collection of values to a single value. The accumulated value is the
                 state object, and the values being accumulated are actions. Reducers calculate a new
@@ -26,9 +28,35 @@ state:          refers to the single state value that is managed by the store an
 state tree:     Basically synonymous with state.
 
 store:          Object that holds the application's state tree
+                A store is not a model. A store CONTAINS models.
+                The only thing in your application that knows how to update data
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// DIAGRAMS /////////////////////////////////////////////
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+React JS FLUX form validation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+| FLUX - Application state |
+
+                    |------------|
+  |---------------> | DISPATCHER | // 3. Pass submit to store
+  |                 |------------|
+  |                       |
+  |                   |-------|
+  |                   | STORE | // 4. Save to server, update state and emit change
+  |                   |-------|
+  |                       |
+  |                 |-----------|
+  |                 | COMPONENT | // 1. Get server validation state
+  | 2. submit form  |-----------|
+  |-----------------------|
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 /****************************//
 /**** Overview

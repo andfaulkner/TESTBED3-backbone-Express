@@ -41,11 +41,15 @@ var log = require('server/debug/winston-logger');
 require('server/debug/uncaught-error-handler');
 //********************************************************************//
 
+//get router
+var restAPIRouter = require('server/routes/todo-restapi-routes');
+
 //******************************* SERVER *******************************//
 var express = require('express');
 
 var app = require('server/middlewares')(express())
-    .use('/', express.static(path.join(__dirname, '.build/client')));
+    .use('/', express.static(path.join(__dirname, '.build/client')))
+    .use('/api', restAPIRouter);
 //**********************************************************************//
 
 //Build Express app itself (loads & runs a constructor module), serves over web

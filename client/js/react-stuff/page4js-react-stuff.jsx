@@ -1,3 +1,5 @@
+/* global $ React */
+
 /***************************************************************************************************
 *
 *   REACT TINKERING
@@ -8,7 +10,7 @@
  * REACT DEFINITIONS
  *
  * ReactElement   :     Single virtual DOM node usable by a ReactComponent. Defined using JSX tags.
- *                      E.g. <input type="text" /> - in JSX - is a ReactElement. Outside JSX, def
+ *                      E.g. <input type='text' /> - in JSX - is a ReactElement. Outside JSX, def
  *                      w React.createElement('input', { type: 'text' });  [or something like that]
  *
  * ReactComponent :
@@ -17,7 +19,7 @@
  * Components     :     uncontrolled component. In an uncontrolled <input>, the value of the
  *                      rendered element will reflect the user's input. To listen to updates to the
  *                      value, use inline onChange event, within the tag - e.g.
- *                          <input type="text" onChange={this.someChangeHandlingFn} />
+ *                          <input type='text' onChange={this.someChangeHandlingFn} />
  *                          ... where someChangeHandlingFn is defined earlier in the component...
  *                            handleChange: function(event) {
  *                                this.setState({ value: event.target.value.substr(0, 140) });
@@ -29,9 +31,31 @@
 
 
 //Imports React...obviously
-import React from 'react';
+
+// import React from 'react';
+
+console.log(React);
+
 import { Router, Route, Link } from 'react-router';
 
+// import { schema, Form } from 'react-forms';
+var ReactForms = require('react-forms');
+var schema = ReactForms.schema;
+var Schema = ReactForms.schema.Schema;
+var Property = ReactForms.schema.Property;
+var List = ReactForms.schema.List;
+var Form = ReactForms.Form;
+
+console.log(Form);
+console.log(Schema);
+console.log(Property);
+console.log(List);
+
+
+// var ReactForms = require('react-forms');
+// var Schema = ReactForms.schema.Schema;
+// var Property = ReactForms.schema.Property;
+// var Form = ReactForms.Form;
 
 /**
  * From here down, exported to the browser
@@ -40,6 +64,42 @@ module.exports = (function page4jsReactStuff_Module(){
 
     // console.log('in react stuff!');
 
+    //*****************************************************************************
+    //
+    //      FORM CREATION
+    //
+    //-----
+    // function Person(props) {
+    //     props = props || {};
+    //     return (
+    //         <Schema name={props.name} label={props.label}>
+    //             <Property name="first" label="First name" />
+    //             <Property name="last" label="Last name" />
+    //         </Schema>
+    //     );
+    // }
+
+    // var family = (
+    //   <Schema>
+    //     <Person name="mother" label="Mother" />
+    //     <Person name="father" label="Father" />
+    //     <List name="children" label="Children">
+    //       <Person />
+    //     </List>
+    //   </Schema>
+    // );
+
+    // React.render(
+    //   <Form schema={family} />,
+    //   document.getElementById('react-component-10'));
+
+    //-----
+    //
+    //      END DYNAMIC COMPONENTS
+    //
+    //**************************************************************************//
+
+
 
     //*****************************************************************************
     //
@@ -47,95 +107,124 @@ module.exports = (function page4jsReactStuff_Module(){
     //
     //-----
 
-    // var puppyData = [
-    //     {id: 1, firstName: 'Meeka', lastName: 'PeekaFaulkner'},
-    //     {id: 2, firstName: 'Callie', lastName: 'Peeke'},
-    //     {id: 3, firstName: 'Osiris', lastName: 'Persia'},
-    //     {id: 4, firstName: 'Lako', lastName: 'Bakota'}
-    // ]
+    var puppyData = [
+        {id: 1, firstName: 'Meeka', lastName: 'Peekafaulkner'},
+        {id: 2, firstName: 'Callie', lastName: 'Peeke'},
+        {id: 3, firstName: 'Osiris', lastName: 'Persia'},
+        {id: 4, firstName: 'Lako', lastName: 'Bakota'}
+    ];
 
-    // //================== COMPONENT ==================
-    // //
-    // //--
-    // //
-    // var DynamicDataBlock = React.createClass({
+    //================== COMPONENT ==================
+    //
+    //--
+    //
+    var DynamicDataBlock = React.createClass({
 
-    //     //Sets up the initial state of the component - e.g. the initial variables' values
-    //     getInitialState: function(){
-    //         return { puppyDataTable: puppyData };
-    //     },
+        //Sets up the initial state of the component - e.g. the initial variables' values
+        getInitialState: function(){
+            return { data: puppyData };
+        },
 
-    //     // Run on component update; i.e. when this.update is called in 'this.render' below
-    //     update: function() {
-    //         puppyDataTable.push({ });
-    //         return this.setState({ });
-    //     },
+        // Run on component update; i.e. when this.update is called in 'this.render' below
+        update: function() {
+            this.state.data.push({
+                id: this.state.data.length + 1,
+                firstName: React.findDOMNode(this.refs.puppyAdder.refs.addFirstNameBox).value,
+                lastName: React.findDOMNode(this.refs.puppyAdder.refs.addLastNameBox).value
+            });
+            return this.setState({ });
+        },
 
-    //     //[2] Mount component
-    //     render: function() {
+        /**
+         * Passes data up to server from form
+         * @param  {ReactEvent} e - object containing a React Event
+         */
+        submit: function(e){
+            e.preventDefault();
+            $.post('/api/take-puppies', { data: this.state.data }, function(data, textStatus, xhr) {
+                console.log(data);
+            });
+        },
 
-    //         this.rows = this.state.puppyDataTable.map(function(puppy){
-    //             return ( <PuppyTableRow data={puppy} key={puppy.id}} />  );
-    //         });
+        //[2] Mount component
+        render: function() {
 
-    //         return (
-    //             <div className="DynamicDataBlock">
-    //                 <table>{rows}</table>
-    //                 <AddPuppy update={this.update} />
-    //                 <SubmitPuppies />
-    //             </div>
-    //         );
-    //     },
+            var rows = this.state.data.map(function(puppy){
+                return ( <PuppyTableRow data={puppy} key={puppy.id} /> );
+            });
 
-    // });
-    // //===============================================
+            return (
+                <div className='DynamicDataBlock'>
+                    <table>{rows}</table>
+                    <form onSubmit={this.submit}>
+                        <AddPuppy update={this.update} ref='puppyAdder' />
+                        <SubmitPuppies />
+                    </form>
+                </div>
+            );
+        },
 
-
-
-    // //================== COMPONENT ==================
-    // //
-    // //--
-    // //
-    // var PuppyTableRow = React.createClass({
-    //     render: function() {
-    //         return (
-    //             <
-    //         );
-
-    //     }
-    // });
-    // //===============================================
-
-
-    // //================== COMPONENT ==================
-    // //
-    // //--
-    // //
-    // var AddPuppy = React.createClass({
-    //     render: function() {
-    //         return (
-    //             <div className="AddPuppy"></div>
-    //         );
-    //     }
-    // });
-    // //===============================================
+    });
+    //===============================================
 
 
-    // //================== COMPONENT ==================
-    // //
-    // //--
-    // //
-    // var SubmitPuppies = React.createClass({
-    //     render: function() {
-    //         return (
-    //             <div className="SubmitPuppies"></div>
-    //         );
-    //     }
-    // });
-    // //===============================================
+
+    //================== COMPONENT ==================
+    //
+    //--
+    //
+    var PuppyTableRow = React.createClass({
+        render: function() {
+            return (
+                <tr>
+                    <td>{this.props.data.id} </td>
+                    <td> |-| </td>
+                    <td>{this.props.data.firstName} </td>
+                    <td> |-| </td>
+                    <td>{this.props.data.lastName} </td>
+                </tr>
+            );
+
+        }
+    });
+    //===============================================
 
 
-    // React.render(<DynamicDataBlock />, __domNodeToAttachTo);
+    //================== COMPONENT ==================
+    //
+    //--
+    //
+    var AddPuppy = React.createClass({
+        render: function() {
+            return (
+                <div className='AddPuppy'>
+                    <input type='text' ref='addFirstNameBox'/>-
+                    <input type='text' ref='addLastNameBox'/>
+                    <button onClick={this.props.update}>Add</button>
+                </div>
+            );
+        }
+    });
+    //===============================================
+
+
+    //================== COMPONENT ==================
+    //
+    //--
+    //
+    var SubmitPuppies = React.createClass({
+        render: function() {
+            return (
+                <div className='SubmitPuppies'>
+                    <button type='submit'>Submit</button>
+                </div>
+            );
+        }
+    });
+    //===============================================
+
+
+    React.render(<DynamicDataBlock />, document.getElementById('react-component-9'));
 
     //-----
     //
@@ -150,17 +239,17 @@ module.exports = (function page4jsReactStuff_Module(){
     //
     //-----
     var personData = [
-        {id: 1, fname: "Simon", lname: "Shollenberger"},
-        {id: 2, fname: "Joe", lname: "Peters"},
-        {id: 3, fname: "John", lname: "Moss"},
-        {id: 4, fname: "Jack", lname: "Penner"},
-        {id: 5, fname: "Albert", lname: "Doggs"},
-        {id: 6, fname: "Isabelle", lname: "McNeil"},
-        {id: 7, fname: "Meeka", lname: "Faulkner"},
-        {id: 8, fname: "Callie", lname: "Peeke"},
-        {id: 9, fname: "Lisa", lname: "Faulkner"},
-        {id: 10, fname: "Boo", lname: "TheGhost"},
-        {id: 11, fname: "Fish", lname: "TheFish"}
+        {id: 1, fname: 'Simon', lname: 'Shollenberger'},
+        {id: 2, fname: 'Joe', lname: 'Peters'},
+        {id: 3, fname: 'John', lname: 'Moss'},
+        {id: 4, fname: 'Jack', lname: 'Penner'},
+        {id: 5, fname: 'Albert', lname: 'Doggs'},
+        {id: 6, fname: 'Isabelle', lname: 'McNeil'},
+        {id: 7, fname: 'Meeka', lname: 'Faulkner'},
+        {id: 8, fname: 'Callie', lname: 'Peeke'},
+        {id: 9, fname: 'Lisa', lname: 'Faulkner'},
+        {id: 10, fname: 'Boo', lname: 'TheGhost'},
+        {id: 11, fname: 'Fish', lname: 'TheFish'}
     ];
 
     //================== COMPONENT ==================
@@ -211,7 +300,7 @@ module.exports = (function page4jsReactStuff_Module(){
             return (
                 <div>
                     <table>{rows}</table>
-                    <AddPersonBlock ref="dataAdder" update={this.update} />
+                    <AddPersonBlock ref='dataAdder' update={this.update} />
                 </div>
             );
         }
@@ -258,9 +347,9 @@ module.exports = (function page4jsReactStuff_Module(){
             console.log('AddPersonBlock.render::: this.state:'); console.log(this.state);
             console.log('AddPersonBlock.render::: this.props:'); console.log(this.props);
             return (
-                <div className="AddPersonBlock"><br/>
-                    <span><input type="text" ref='newFirstNmTxtBox'/>. .</span>
-                    <span><input type="text" ref='newLastNmTxtBox'/>. .</span>
+                <div className='AddPersonBlock'><br/>
+                    <span><input type='text' ref='newFirstNmTxtBox'/>. .</span>
+                    <span><input type='text' ref='newLastNmTxtBox'/>. .</span>
                     <button onClick={this.props.update}>Add Person</button>
                 </div>
             );
@@ -329,7 +418,10 @@ module.exports = (function page4jsReactStuff_Module(){
 
     });
 
-    React.render(<ButtonWithUpdateLifecycle val={0} />, document.getElementById('react-component-7'));
+    React.render(
+        <ButtonWithUpdateLifecycle val={0} />,
+        document.getElementById('react-component-7')
+    );
 
 //**************************** MOUNTING PRACTICE ***************************//
     var ButtonToMount2 = React.createClass({
@@ -491,7 +583,7 @@ module.exports = (function page4jsReactStuff_Module(){
     var AppThree = React.createClass({
         render: function() {
             return (
-                <div className="AppThree">
+                <div className='AppThree'>
                     <Spacer/>
                     <ButtonTwo><Heart/></ButtonTwo>
                     <Spacer/>
@@ -503,7 +595,7 @@ module.exports = (function page4jsReactStuff_Module(){
     var ButtonTwo = React.createClass({
         render: function() {
             return (
-                <div className="ButtonTwo"> I {this.props.children} eating babies</div>
+                <div className='ButtonTwo'> I {this.props.children} eating babies</div>
             );
         }
     });
@@ -511,7 +603,7 @@ module.exports = (function page4jsReactStuff_Module(){
     var Heart = React.createClass({
         render: function() {
             return (
-                <span className="Heart" className="heart"><b><u>love</u></b></span>
+                <span className='Heart' className='heart'><b><u>love</u></b></span>
             );
         }
     });
@@ -552,9 +644,9 @@ module.exports = (function page4jsReactStuff_Module(){
             // var txt = this.props.txt;
             var cat = this.props.cat;
             return (
-                <div className="App">
+                <div className='App'>
                     <Spacer/>
-                    <input type="text" onChange={this.update} />
+                    <input type='text' onChange={this.update} />
                     <h1>Hello World</h1>
                     <h2>{this.state.txt}</h2>
                     <span><b>{cat}</b></span>
@@ -564,7 +656,7 @@ module.exports = (function page4jsReactStuff_Module(){
         }
     });
 
-    React.render(<App txt="yay!" cat={7} />, document.getElementById('react-component-1'));
+    React.render(<App txt='yay!' cat={7} />, document.getElementById('react-component-1'));
 }());
 
 
@@ -591,9 +683,9 @@ var AppTwo = React.createClass({
 
     render: function() {
         return (
-            <div className="AppTwo">
-                <input type="text" onChange={this.update}/><br/>
-                <input type="text" onChange={this.update}/> <br/>
+            <div className='AppTwo'>
+                <input type='text' onChange={this.update}/><br/>
+                <input type='text' onChange={this.update}/> <br/>
                 <span>Your name is {this.state.name}</span><br/>
                 <span>Your age is currently {this.state.age}</span>
             </div>
@@ -631,7 +723,7 @@ var CaseBox = React.createClass({
 
     render: function() {
         return (
-            <div className="CaseBox">
+            <div className='CaseBox'>
                 <TextInputter ref='caseNum' inputTitle='Case Number' update={this.update}/>
                 <TextInputter ref='caseName' inputTitle='Case Name' update={this.update}/>
                 <DropdownInputter ref='caseType' inputIdent='caseType' inputTitle='Case Type'
@@ -652,9 +744,9 @@ var CaseBox = React.createClass({
 var TextInputter = React.createClass({
     render: function() {
         return (
-            <div className="TextInputter">
+            <div className='TextInputter'>
                 <h2>{this.props.inputTitle}</h2>
-                <input ref="inp" type="text" onChange={this.props.update}/><br/>
+                <input ref='inp' type='text' onChange={this.props.update}/><br/>
             </div>
         );
     }
@@ -673,14 +765,14 @@ var DropdownInputter = React.createClass({
 
     render: function() {
         return (
-            <div className="DropdownInputter">
+            <div className='DropdownInputter'>
                 <h2>{this.props.inputTitle}</h2>
-                <select ref="drop" name={this.props.inputIdent} defaultValue="theft"
+                <select ref='drop' name={this.props.inputIdent} defaultValue='theft'
                         id={this.props.inputIdent+'Dropdown'} onChange={this.props.update}>
-                    <option value="fraud">fraud</option>
-                    <option value="theft">theft</option>
-                    <option value="espionage">espionage</option>
-                    <option value="bears">bears</option>
+                    <option value='fraud'>fraud</option>
+                    <option value='theft'>theft</option>
+                    <option value='espionage'>espionage</option>
+                    <option value='bears'>bears</option>
                 </select>
             </div>
         );

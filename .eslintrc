@@ -64,7 +64,7 @@
     "wrap-iife": 2,
     "no-redeclare": 2,
     "no-useless-concat": 1,
-    "no-param-reassign": 1,
+    "no-param-reassign": 0,
     "no-floating-decimal": 2,
     "no-caller": 1,
     "complexity": [1, 4],

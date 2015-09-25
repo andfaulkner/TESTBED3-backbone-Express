@@ -1,3 +1,28 @@
+--- static type checking via flow - add it in incrementally
+
+--- artificial single source of truth via secondary running process (for development). i.e. 2 parts:
+        - initial setup script (to figure out how to set this up) that:
+            --- pulls all files related to a given form into a single special dev dir
+            --- does an intelligent merge on all configurations (from JSON and JS - wherever possible)
+            --- provides a single 'glued-together' file.
+        - script that builds project config files from a single config (JSON or JS) in the dev dir.
+            --- would eliminate full-on redundancies where properties are defined in more than once place
+            --- codify certain 'magic' naming patterns (i.e. block certain naming patterns that break
+                things mysteriously such as the underscore character weirdness in the app right now)
+            --- auto-generate properties with names always based on the name of another property - e.g.
+                --- e.g. define a field once, in one file, as fieldName: 'Case Type'. From this,
+                    the script would create properties:
+                        'field': 'caseType',
+                        'comment': 'Case Type',
+                        'caption': 'case_type',
+                        'picklistData': 'case_types'
+            --- provides sane (but easy-to-override) defaults for certain repetitively defined properties
+            --- watches single-source-of-truth file for changes, auto-rebuilds when it does.
+                --- etc....
+            --- emits generated config files to appropriate locations (or merges the data in - i.e. injects it)
+
+
+
 --- why the 'serial' module? Async would handle it better, and with greater clarity
 
 --- Seneca services in separate processes

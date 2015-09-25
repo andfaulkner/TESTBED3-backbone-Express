@@ -5,6 +5,17 @@ react-router
 
 
 _________________________________________________________________________________________________________
+
+Normalizing data to a schema while it's still JSON - before sending to the DB or doing a normalization script --- i.e. via a JSON auto-mutator rather than complex custom scripts that recurse thru obj prop trees
+--- e.g.
+        npm install --save normalizr
+            -- https://github.com/gaearon/normalizr
+                    In short: "Normalizes nested JSON according to a schema"
+
+WHY?
+--- provides a layer of separation between data in any given JSON and the data required by any given API
+    -- purpose: for single sources of truth - to let us define a single JSON holding all data for a given component, with each piece of data defined once and only once. The single source of truth can then be 'normalized' for different purposes, using different 'schemas'.
+_________________________________________________________________________________________________________
 _________________________________________________________________________________________________________
 _________________________________________________________________________________________________________
 REDUX - FOR REACT - LIKE FLUX BUT MORE MINIMAL, MORE 'FUNCTIONAL'

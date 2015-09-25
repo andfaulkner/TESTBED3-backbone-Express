@@ -17,12 +17,14 @@
     "backbone-db": "^0.5.6",
     "backbone-db-elasticsearch": "^0.1.13",
     "backbone-db-redis": "^0.1.2",
+    "body-parser": "^1.14.0",
     "bootstrap": "^3.3.5",
     "busboy": "^0.2.11",
     "clarify": "^1.0.5",
     "colors": "^1.1.2",
     "continuation.js": "^0.2.5",
     "express": "^4.13.3",
+    "formsy-react": "^0.14.1",
     "immutable": "^3.7.5",
     "install": "^0.1.8",
     "jquery": "^2.1.4",
@@ -49,12 +51,13 @@
   },
   "devDependencies": {
     "babel": "^5.8.23",
-    "babel-core": "^5.8.24",
+    "babel-core": "^5.8.25",
     "babel-eslint": "^4.1.2",
     "babel-loader": "^5.3.2",
     "bootstrap-webpack": "0.0.3",
     "del": "^2.0.1",
     "eslint": "^1.4.1",
+    "eslint-config-airbnb": "0.0.8",
     "eslint-plugin-babel": "^2.1.1",
     "eslint-plugin-react": "^3.3.2",
     "file-loader": "^0.8.4",
@@ -102,7 +105,7 @@
     "tcp-port-used": "^0.1.2",
     "trace": "^0.2.1",
     "url-loader": "^0.5.6",
-    "webpack": "^1.12.1",
+    "webpack": "^1.12.2",
     "yargs": "^3.24.0"
   }
 }

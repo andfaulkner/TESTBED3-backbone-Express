@@ -4,7 +4,7 @@ console.time('webpack config entirety');
 //Fix root path referenced by require
 require('rootpath')();
 
-// require('babel');
+require('babel');
 
 // require('babel/register');
 Object.getPrototypeOf.toString = function() {
@@ -28,7 +28,7 @@ var glob = require('glob');
 var entryPts = (function entryPts(){
     var retObj = { };
     console.time('entryPts');
-    var files = _.map(glob.sync('./client/js/+(page*|index*).js'),
+    var files = _.map(glob.sync('./client/js/+(page*|index*|redux*).js'),
                       function(file) { return _.rest(file.split('/')).join('/'); });
     _.each(files, function(file){
         retObj[file] = './' + file;
@@ -60,12 +60,12 @@ module.exports = {
         loaders: [
             // { test: /\.es6.js$/, loader: 'babel-loader' }
             {
-                test: /\.js[x]$/,
-                loader: 'babel',
-                exclude: /(node_modules|bower_components|\.build)/,
+                test: /\.jsx?$/,
+                loader: 'babel-loader',
+                exclude: /(bower_components|\.build|\.buildcache)/,
                 query: {
                     cacheDirectory: path.join(__dirname, '.buildcache'),
-                    optional: ['runtime'],
+                    // optional: ['runtime'],
                     nonStandard: true //allows jsx
                 }
             }
@@ -111,6 +111,12 @@ module.exports = {
             React: 'react'
         })
     ],
+
+    stats: {
+        // Nice colored output
+        colors: true
+    }
+
 };
 console.timeEnd('webpack module exports');
 console.timeEnd('webpack config entirety');
