@@ -28,8 +28,11 @@ var glob = require('glob');
 var entryPts = (function entryPts(){
     var retObj = { };
     console.time('entryPts');
-    var files = _.map(glob.sync('./client/js/+(page*|index*|redux*).js'),
+    var files1 = _.map(glob.sync('./client/js/*.js'),
                       function(file) { return _.rest(file.split('/')).join('/'); });
+    var files2 = _.map(glob.sync('./client/components/*/*.js'),
+                      function(file) { return _.rest(file.split('/')).join('/'); });
+    var files = files1.concat(files2);
     _.each(files, function(file){
         retObj[file] = './' + file;
     });
