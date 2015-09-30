@@ -1,3 +1,6 @@
+/* global _, Backbone */
+'use strict';
+
 (function(Backbone, _){
     console.log('entered indexjs closure!');
 
@@ -25,7 +28,7 @@
         //$el: a cached jQuery object (el), in which you can use jQuery fns
         //     to push content (content === 'Hello World!' in this case)
         //render: Run via 'initialize' method above (via this.render() call).
-        //Render injects the markup into the elements i.e. renders the View; i.e. Displays the BBView.
+        //Render injects markup into the elements i.e. renders the View; i.e. Displays the BBView
         //It doesn't have to be a template here - it can be e.g. a string or html element).
         render: function() {
         // Renders the function using substituting the varible 'who' for 'Meeka!'

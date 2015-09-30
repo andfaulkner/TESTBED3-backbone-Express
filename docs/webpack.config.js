@@ -4,59 +4,48 @@ console.time('webpack config entirety');
 //Fix root path referenced by require
 require('rootpath')();
 
-require('babel');
-
-// require('babel/register');
-Object.getPrototypeOf.toString = function() {
-    return Object.toString();
-};
-
 /**
  * Webpack configuration for module handling
  */
 var path = require('path');
 var _      = require('lodash');
 var webpack = require('webpack');
-// var WebpackDevServer = require('webpack-dev-server');
 var fs = require('fs');
 var glob = require('glob');
 
 // require('dustjs-linkedin/dist/dust-core');
 // var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// var entryPts = (function entryPts(){
-//     var retObj = { };
-//     console.time('entryPts');
-//     var files1 = [];
-//         // _.map(glob.sync('./client/js/*.js'),
-//         //               function(file) { return _.rest(file.split('/')).join('/'); });
-//     var files2 = _.map(glob.sync('./client/components/**/*.js'),
-//                       function(file) { return _.rest(file.split('/')).join('/'); });
-//     var files = files1.concat(files2);
-//     _.each(files, function(file){
-//         retObj[file] = './' + file;
-//     });
-//     console.timeEnd('entryPts');
-//     return retObj;
-// }());
+var entryPts = (function entryPts(){
+    var retObj = { };
+    console.time('entryPts');
+    var files1 = [];
+        // _.map(glob.sync('./client/js/*.js'),
+        //               function(file) { return _.rest(file.split('/')).join('/'); });
+    var files2 = _.map(glob.sync('./client/components/*/*.js'),
+                      function(file) { return _.rest(file.split('/')).join('/'); });
+    var files = files1.concat(files2);
+    _.each(files, function(file){
+        retObj[file] = './' + file;
+    });
+    console.timeEnd('entryPts');
+    return retObj;
+}());
 
-// console.log('entryPts');
-// console.log(entryPts);
+console.log('entryPts');
+console.log(entryPts);
 
 console.time('webpack module exports');
 
-// ANOTHER TIME: get the webpack dev server working
-// var compiler = webpack({
 module.exports = {
+
     //location from which all other routes are derived - base path
     'context': __dirname,
 
     //left side is output file; right side is input file (left used for [name] in output)
-    // 'entry': entryPts,
-    'entry': {
-        './client/components/react-1/react-1-index.js':
-                './client/components/react-1/react-1-index.js'
-    },
+    'entry': entryPts,
+
+    'cache': true,
 
     'output': {
         path: path.join(__dirname, '.build'),
@@ -70,21 +59,10 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
-                // exclude: /(bower_components|\.build(cache)?)/,
                 include: [
-                    path.resolve(__dirname, 'client/components'),
-                    path.resolve(__dirname, 'client/components/react-1'),
-                    path.resolve(__dirname, 'client/js'),
-                    path.resolve(__dirname, 'node_modules/react'),
-                    path.resolve(__dirname, 'node_modules/react-dom'),
-                    path.resolve(__dirname, 'node_modules/react-panels'),
-                    path.resolve(__dirname, 'node_modules/react-redux'),
-                    path.resolve(__dirname, 'node_modules/react-router'),
-                    path.resolve(__dirname, 'node_modules/react-tap-event-plugin'),
-                    path.resolve(__dirname, 'node_modules/react-tools'),
-                    path.resolve(__dirname, 'node_modules/redux'),
-                    path.resolve(__dirname, 'node_modules/redux-devtools')
-                ],
+                          path.resolve(__dirname, 'client/components')
+                          // path.resolve(__dirname, 'client/js')
+                          ],
                 query: {
                     cacheDirectory: path.join(__dirname, '.buildcache'),
                     nonStandard: true //allows jsx
@@ -92,8 +70,6 @@ module.exports = {
             }
         ]
     },
-
-    'cache': true,
 
     //compile for use in a browser environment
     'target': 'web',
@@ -109,7 +85,8 @@ module.exports = {
         root: [path.join(__dirname, 'node_modules')],
         fallback: [path.join(__dirname, 'node_modules')],
         extensions: ['', '.js', '.json', '.jsx'],
-        modulesDirectories: ['node_modules']
+        modulesDirectories: ['node_modules'],
+        unsafeCache: [/node_modules.*/g]
     },
 
     'debug': true,
@@ -137,20 +114,7 @@ module.exports = {
         // Nice colored output
         colors: true
     }
+
 };
-
-// ANOTHER TIME: get the webpack dev server working
-// var server = new WebpackDevServer(compiler, {
-//     contentBase: path.join(__dirname, 'client'),
-
-//     hot: true,
-//     quiet: false,
-//     noInfo: false,
-//     lazy: true,
-
-// });
-
 console.timeEnd('webpack module exports');
 console.timeEnd('webpack config entirety');
-
-console.time('webpack config entirety');

@@ -36,7 +36,7 @@
     "no-label-var": 2,
     "no-use-before-define": 2,
     "func-names": 0,
-    "indent": [1, 4],
+    "indent": [0, 4],
     "no-array-constructor": 2,
     "no-lonely-if": 2,
     "no-continue": 2,

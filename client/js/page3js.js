@@ -1,3 +1,6 @@
+/* global _, Backbone, Store, $, window */
+'use strict';
+
 (function page3_js(Backbone, _, $, Store, window) {
     var app = {}; // create namespace for our app
 
@@ -38,7 +41,7 @@
             completed: false
         },
 
-        //If item complete, marks incomplete. If item incomplete, marks complete. Saves change in state.
+        //If item complete, marks incomplete. If item incompl., marks compl.. Saves change in state
         toggle: function() {
             this.save({
                 completed: !this.get('completed')
@@ -123,7 +126,7 @@
 
         initialize: function TodoView_initialize() {
             this.model.on('change', this.render, this);
-            this.model.on('destroy', this.remove, this); //remove: convenience BB fn to rm view from DOM
+            this.model.on('destroy', this.remove, this); //rm: convenience fn to rm view from DOM
         },
 
         /**
@@ -142,7 +145,7 @@
          * Modifies the contents of the todo list item
          */
         edit: function TodoView_edit() {
-            this.$el.addClass('editing'); //restyle element to inform user it's currently being edited
+            this.$el.addClass('editing'); //restyle el to inform user it's currently being edited
             this.input.focus(); //"select" the input box
         },
 
@@ -175,7 +178,8 @@
          * Save the completion status of the list item to storage.
          */
         toggleCompleted: function TodoView_toggleCompleted() {
-            console.log(this.$el); //--> entire DOM of single todo list item (<li><div class="view">...etc...</div></li>)
+            console.log(this.$el);
+            //--> entire DOM of single todo list item (<li><div class="view">...etc...</div></li>)
             this.model.toggle();
         },
 
@@ -249,21 +253,21 @@
             //Catches various routes - e.g. case pending runs at origin/file.html#pending
             //window.filter returns the string past the # in the URI
             switch (window.filter) {
-                case 'pending':
-                    console.log('window.filter:');
-                    console.log(window.filter);
-                    _.each(app.todoList.remaining(), this.addOne);
-                    break;
-                case 'completed':
-                    console.log('window.filter:');
-                    console.log(window.filter);
-                    _.each(app.todoList.completed(), this.addOne);
-                    break;
-                default:
-                    console.log('window.filter:');
-                    console.log(window.filter);
-                    app.todoList.each(this.addOne, this);
-                    break;
+            case 'pending':
+                console.log('window.filter:');
+                console.log(window.filter);
+                _.each(app.todoList.remaining(), this.addOne);
+                break;
+            case 'completed':
+                console.log('window.filter:');
+                console.log(window.filter);
+                _.each(app.todoList.completed(), this.addOne);
+                break;
+            default:
+                console.log('window.filter:');
+                console.log(window.filter);
+                app.todoList.each(this.addOne, this);
+                break;
             }
         },
 

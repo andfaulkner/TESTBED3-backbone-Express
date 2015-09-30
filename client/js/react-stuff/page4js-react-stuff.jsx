@@ -38,25 +38,6 @@ console.log(React);
 
 import { Router, Route, Link } from 'react-router';
 
-// import { schema, Form } from 'react-forms';
-var ReactForms = require('react-forms');
-var schema = ReactForms.schema;
-var Schema = ReactForms.schema.Schema;
-var Property = ReactForms.schema.Property;
-var List = ReactForms.schema.List;
-var Form = ReactForms.Form;
-
-console.log(Form);
-console.log(Schema);
-console.log(Property);
-console.log(List);
-
-
-// var ReactForms = require('react-forms');
-// var Schema = ReactForms.schema.Schema;
-// var Property = ReactForms.schema.Property;
-// var Form = ReactForms.Form;
-
 /**
  * From here down, exported to the browser
  */
@@ -141,7 +122,7 @@ module.exports = (function page4jsReactStuff_Module(){
          */
         submit: function(e){
             e.preventDefault();
-            $.post('/api/take-puppies', { data: this.state.data }, function(data, textStatus, xhr) {
+            $.post('/api/puppies', { data: this.state.data }, function(data, textStatus, xhr) {
                 console.log(data);
             });
         },

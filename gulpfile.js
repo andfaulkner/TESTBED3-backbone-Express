@@ -290,7 +290,7 @@ gulp.task('server', function livereloadServer(){
                     console.log('\n' + gutil.colors.white.bold.bgGreen('\n' +
                     '     .......... RELOADING PAGE, PLEASE WAIT ..........\n'));
                 }))
-                .pipe(notify({message: 'RELOADING PAGE, PLEASE WAIT', onLast: true}))
+                //.pipe(notify({message: 'RELOADING PAGE, PLEASE WAIT', onLast: true}))
                 // .pipe(wait(1000));
                 .pipe(livereload());
         }));
@@ -301,10 +301,10 @@ gulp.task('webpack', function webpackTask() {
     return gulp.src(SRC.clientJS)
         .pipe(newerThanRootIfNotProduction())
         .pipe(p.webpack(require('./webpack.config.js')))
-        .pipe(notify({
-            onLast: true,
-            message: 'WEBPACKING COMPLETED'
-        }))
+        //.pipe(notify({
+        //    onLast: true,
+        //    message: 'WEBPACKING COMPLETED'
+        //}))
         .pipe(gulp.dest(DEST.root));
 });
 
@@ -317,10 +317,10 @@ gulp.task('dust', function dustTask(){
             }
         }))
         .pipe(gulp.dest(DEST.root))
-        .pipe(notify({
-            onLast: true,
-            message: 'DUST Compiled'
-        }));
+        //.pipe(notify({
+        //    onLast: true,
+        //    message: 'DUST Compiled'
+        //}));
 });
 
 
@@ -328,10 +328,10 @@ gulp.task('copy-static', function copyStaticTask(){
     return gulp.src(SRC.clientStatic)
         .pipe(newerThanRootIfNotProduction())
         .pipe(gulp.dest(DEST.clientStatic))
-        .pipe(notify({
-            onLast: true,
-            message: 'STATIC ASSETS COPIED'
-        }));
+        //.pipe(notify({
+        //    onLast: true,
+        //    message: 'STATIC ASSETS COPIED'
+        //}));
 });
 
 gulp.task('reload', function reloadTask() {
@@ -353,7 +353,7 @@ gulp.task('build', function(){ return runSequence(['copy-static', 'webpack'], 'r
  * Relaunches livereload server if true
  * @return {[type]}       [description]
  */
-gulp.task('default', ['build'], function(){ return  initLivereloadWatchSetup(); });
+gulp.task('default', ['build'], function(){ return initLivereloadWatchSetup(); });
 
 
 // gulp.task('olddefault', () => runSequence('build', 'watch') ); //task watch now = task default

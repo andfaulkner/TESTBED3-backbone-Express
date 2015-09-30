@@ -1,3 +1,6 @@
+/* global Backbone, _, Store, $ */
+'use strict';
+
 (function page2js(Backbone, _, Store, $) {
 
     //___________________________________________________________________________//
@@ -131,16 +134,6 @@
         //     this.render();
         // },
         'render': function AppClassTodoView_render() {
-            console.log(arguments.callee.caller.name);
-            console.log('IN APPCLASS.TODOVIEW RENDER');
-            // console.log('-- this.model: --');                 console.log(this.model);        console.log('-- this.model.toJSON(): --');        console.log(this.model.toJSON());
-            // console.log('-- this.$el: --');                   console.log(this.$el);          console.log('-- this.$el.html: --');              console.log(this.$el.html);
-            // console.log('-- this.template: --');              console.log(this.template);     console.log('-- $("#item-template").html(): --'); console.log($('#item-template').html());
-            // console.log('-- _.template($("#item-template").html()): --');                     console.log(_.template($('#item-template').html()));
-            // console.log('-- this.$el.html(this.template(this.model.toJSON())): --');          console.log(this.$el.html(this.template(this.model.toJSON())));
-            // console.log('-- (this.$el.html(this.template(this.model.toJSON())).html()): --'); console.log((this.$el.html(this.template(this.model.toJSON()))).html());
-            // CONFIRMED --> THE TEMPLATE REPLACEMENT OCCURS
-
             this.$el.html(this.template(this.model.toJSON()));
             return this; // enable chained calls
         }
@@ -219,10 +212,10 @@
             this.input.val(''); //clean input box ?
         },
 
-        addOne: function AppView_addOne(todo){
-            console.log('ADDONE: todo param:: '); console.log(todo);
-            var view = new app.TodoView({model: todo});
-            $('#todo-list').append(view.render().el);
+        addOne: function AppView_addOne(todoIn){
+            console.log('ADDONE: todoIn param:: '); console.log(todoIn);
+            var viewIn = new app.TodoView({model: todoIn});
+            $('#todo-list').append(viewIn.render().el);
         },
 
         addAll: function AppView_addAll(){
@@ -256,7 +249,7 @@
 //
 //
 
-
+/* eslint-disable max-len */
 /* DIAGRAM
 
                             Communication is via Events:
@@ -286,3 +279,4 @@
 
 
 */
+/* eslint-enable max-len */

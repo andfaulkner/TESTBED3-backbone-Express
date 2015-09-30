@@ -2,10 +2,32 @@
 <html>
 <head>
     <title>React components build page</title>
+
+    <style>
+
+    </style>
+
 </head>
 <body>
 
-    <div id="container">default</div>
+    <div id="topbar">default - topbar</div>
+    <div id="panels">default - panels</div>
+    <div id="button1">default - button1</div>
+    <div id="container">default - container</div>
+
+    <form action="../../api/bears/muchbears" method="post" id="myTempTestForm">
+        <br/><br/>
+        <span>Type of Bear:</span><br/>
+            <input type="text" name="bearType">
+        <br/><br/>
+        <span>Food eaten by bear:</span><br/>
+            <input type="text" name="bearFood">
+        <br/><br/>
+            <input type="submit" value="Submit" id="myTempTestFormSubmit">
+        <br/><br/>
+    </form>
+
+    <div id="display--bearType">default bear type</div>
 
 <script src="./react-1-index.js"></script>
 
