@@ -30,6 +30,9 @@ Object.getPrototypeOf.toString = function objToStringPolyfill() {
 };
 //********************************************************************//
 
+//***************************** NODE MODULES *****************************//
+var seneca = require('seneca')();
+
 //**************************** ERROR HANDLING ****************************//
 if (process.env.NODE_ENV !== 'production') {
     Error.stackTraceLimit = Infinity;
@@ -40,6 +43,17 @@ if (process.env.NODE_ENV !== 'production') {
 var log = require('server/debug/winston-logger');
 require('server/debug/uncaught-error-handler');
 //********************************************************************//
+
+//************************* SENECA TESTS *************************//
+//register Seneca client to communicate w microservices, try some actions w it
+seneca.client({ port:11111, host:'localhost', type:'tcp' })
+
+      //Perform math actions
+      .act( 'role:math,cmd:sum,' + 'left:123,right:27',
+            log.seneca.info)
+      .act('role:math,cmd:multiply,' + 'left:10,right:5',
+           log.seneca.info);
+//****************************************************************//
 
 //get router
 var restAPIRouter = require('server/routes/todo-restapi-routes');
